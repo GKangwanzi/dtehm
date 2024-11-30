@@ -1,0 +1,14 @@
+
+@media screen and (max-width: 600px) {
+  .hide-sm {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .login-card {
+    margin-left: 25px;
+    margin-right: 25px;
+  }
+}
