@@ -3,12 +3,12 @@
     <head>
 
         <meta charset="utf-8" />
-        <title>DTEHM</title>
+        <title>DTEHM </title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc."/>
         <meta name="author" content="Zoyothemes"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
+ 
         <!-- App favicon -->
         <link rel="shortcut icon" href="assets/images/favicon.ico">
 
@@ -54,17 +54,69 @@
 
 <div class="auth-title-section mb-3 text-center"> 
 <h3 class="text-dark fs-20 fw-medium mb-2">Welcome back</h3>
-<p class="text-dark text-capitalize fs-14 mb-0">Sign in to continue to silve.</p>
+<p class="text-dark text-capitalize fs-14 mb-0">Sign in to continue.</p>
 </div>
 
 <div class="pt-0">
-<form action="" class="my-4">
+    <?php
+
+if (isset($_POST['login'])) {
+    require_once 'includes/dbhandle.php';
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    //to prevent from mysqli injection  
+    $username = stripcslashes($username);  
+    $password = stripcslashes($password);  
+
+    $sql = "SELECT * FROM users WHERE username='$username' ";
+    $result = mysqli_query($con, $sql);
+    $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
+    if ($user) {
+        if ($password == $user["password"]) {
+            session_start();
+            $_SESSION['user'] = $user["fname"];
+
+            $lastLogin = (date("Y/m/d h:i:s a"));
+            $sql = "UPDATE users SET lastLogin='$lastLogin' WHERE username='$username'";
+
+            if(mysqli_query($con, $sql)){
+                header("Location: dash.php"); 
+                die();
+                } else{
+                    echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+                }
+         
+            // Close connection
+            mysqli_close($con);
+
+        }else{
+            echo "
+            <div class='alert alert-secondary alert-dismissible fade show' role='alert'>
+                Password is wrong!
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+                </button>
+            </div>";
+        }
+    }else{
+        echo "
+            <div class='alert alert-secondary alert-dismissible fade show' role='alert'>
+                User does not exist!
+                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+                </button>
+            </div>";
+    }
+}
+
+?>
+<form method="POST" action="" class="my-4">
 <div class="form-group mb-3">
-<input class="form-control" type="email" id="emailaddress" required="" placeholder="Enter your email">
+<input class="form-control" type="text" name="username" required="" placeholder="Enter username">
 </div>
 
 <div class="form-group mb-3">
-<input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
+<input class="form-control" type="password" name="password" required="" id="password" placeholder="Enter your password">
 </div>
 
 <div class="form-group d-flex mb-3">
@@ -82,7 +134,7 @@
 <div class="form-group mb-0 row">
 <div class="col-12">
     <div class="d-grid">
-        <button class="btn btn-primary" type="submit"> Log In </button>
+        <button name="login" class="btn btn-primary" type="submit"> Log In </button>
     </div>
 </div>
 </div>
