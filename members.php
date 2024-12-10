@@ -66,6 +66,7 @@ $stmt->execute();
 
 // Commit the transaction
     $con->commit();
+    SendSMS('non_customised','bulk', $phone, $message);
     echo "
         <div class='alert alert-primary alert-dismissible fade show' role='alert'>
             Branch registration successful!
