@@ -5,7 +5,7 @@
 <?php include "core/sms.php" ?>
 
 <!-- Left Sidebar Start -->
-<?php 
+<?php
     if ($_SESSION['role']=='admin') { 
         include 'includes/left-menu.php';
     }elseif($_SESSION['role']=='member') { 
@@ -16,6 +16,7 @@
 
     }
  ?>
+
 <!-- Left Sidebar End -->
 
 <!-- ============================================================== -->
@@ -30,9 +31,9 @@
 
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
     <div class="flex-grow-1">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
-            Add New Member
-        </button>
+         <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+           Add New Member 
+        </button>-->
     </div>
 
 <div class="text-end">
@@ -49,44 +50,9 @@ if (isset($_POST['register'])){
     $password = "DH".mt_rand(10, 1000);
     $message = "DTEHM Account details, username $phone  password $password ";
 
-try {   
-    // begin atomic transaction
-$stmt = $con->begin_transaction();
 
-// prepare statement for insert
-$stmt = $con->prepare('INSERT INTO members (memberID, fname, lname, email, phone, branch, password) VALUES (?, ?, ?, ?, ?, ?, ?)');
-$stmt->bind_param('sssssss', $mID, $fname, $lname, $email, $phone, $branch, $password);
-$stmt->execute();
-
-// prepare statement for delete
-$stmt = $con->prepare('INSERT INTO referrals (referrer_id, referree_id)
-    VALUES (?, ?)');
-$stmt->bind_param('ss', $mID, $mID);
-$stmt->execute();
-
-// Commit the transaction
-    $con->commit();
-    echo "
-        <div class='alert alert-primary alert-dismissible fade show' role='alert'>
-            Branch registration successful!
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
-            </button>
-        </div>";
-} catch (Exception $e) {
-    // Rollback the transaction in case of error
-    $con->rollback();
-    echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>"."Failed to insert data: " . $e->getMessage();
-            "<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
-            </button>
-        </div>";
-
-}
-}
-/*
     $sql = "INSERT INTO members (memberID, fname, lname, email, phone, branch, password)
     VALUES ('$mID', '$fname', '$lname', '$email', '$phone', '$branch', '$password')";
-    $sql = "INSERT INTO referrals (referrer_id, referree_id)
-    VALUES ('$mID', '$mID')";
 
     if(mysqli_query($con, $sql)){
     SendSMS('non_customised','bulk', $phone, $message);
@@ -103,7 +69,6 @@ $stmt->execute();
     
   
 }
-*/
 ?>
     </div>
 </div>
@@ -117,7 +82,7 @@ $stmt->execute();
             <div class="card">
 
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Registred Members</h5>
+                    <h5 class="card-title mb-0">Memberships</h5>
                 </div><!-- end card header -->
 
                 <div class="card-body">
@@ -134,7 +99,7 @@ echo "<tr>";
 echo "<th>ID</th>";
 echo "<th>Name</th>";
 echo "<th>Phone Number</th>";
-echo "<th>Branch</th>";
+echo "<th>Status</th>";
 echo "<th>Action</th>";
 echo "</tr>";
 echo "</thead>";
@@ -143,14 +108,21 @@ echo "<tr>";
 echo "<td>" . $row['memberID'] . "</td>";
 echo "<td>" . $row['fname'].' '.$row['lname'] . "</td>";
 echo "<td>" . $row['phone'] . "</td>";
-echo "<td>" . $row['branch'] . "</td>";
+if ($row['membership']=='unpaid') {
+    // code...
+    echo "<td>" ."<a aria-label='anchor' class='btn btn-sm bg-danger-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>"
+        . strtoupper($row['membership'])."
+    </a>" . "</td>";
+} elseif($row['membership']=='paid'){
+    echo "<td>" ."<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>"
+        . strtoupper($row['membership'])."
+    </a>" . "</td>";
+}
+
 echo "<td>                                                       
-    <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
-        <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
-    </a>
-    <a href='core/delete.php?id=".$row['memberID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
-        <i class='mdi mdi-delete fs-14 text-danger'></i>
-    </a>
+    <a href='' class='btn btn-primary' data-bs-toggle='modal'>
+           Initiate Payment
+        </a>
 </td>";
 echo "</tr>";
 } 

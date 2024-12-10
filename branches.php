@@ -1,8 +1,20 @@
 <?php include "core/insert.php" ?>
+<?php include "includes/dbhandle.php" ?>
+<?php include "includes/con.php" ?>
 <?php include "includes/head.php" ?>
 
 <!-- Left Sidebar Start -->
-<?php include 'includes/left-menu.php'; ?>
+<?php 
+    if ($_SESSION['role']=='admin') { 
+        include 'includes/left-menu.php';
+    }elseif($_SESSION['role']=='member') { 
+        include 'includes/menu-member.php';
+    }elseif($_SESSION['role']=='stockist') { 
+        include 'includes/menu-stockist.php';
+    }else{
+
+    }
+ ?>
 <!-- Left Sidebar End -->
 
 <!-- ============================================================== -->
@@ -16,29 +28,17 @@
 <div class="container-fluid">
 
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
-<div class="flex-grow-1">
+    <div class="flex-grow-1">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            Add New Branch
+        </button>
+    </div>
 
-</div>
-</div>
-
-
-
-<!-- Datatables  -->
-<div class="row">
-<div class="col-5">
-<div class="card">
-<div class="card-header">
-<h5 class="card-title mb-0">Register a branch</h5>
-</div><!-- end card header -->
-<div class="card-body">
-<div class="row">
-<div class="col-12">
-<?php
+    <div class="text-end">
+        <?php 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 try {
-
-    $db = new Database("localhost", "root", "", "dtehm");
 
     $tableName = "branches";
     $data = [
@@ -53,13 +53,26 @@ try {
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
             </button>
         </div>";
-
+  
     $db->close();
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
 }
 ?>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalgridLabel">New Branch</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
 <form action="" method="POST">
 <div class="mb-3">
 <label for="simpleinput" class="form-label">Branch name</label>
@@ -75,36 +88,25 @@ try {
 </div>
 
 </form>
+        </div> <!-- end modal body -->
+    </div> <!-- end modal content -->
 </div>
 </div>
-</div>
-
-</div>
-</div>
 
 
 
-<div class="col-7">
-
-<?php
-if (isset($_GET['edit'])) {
-    // code...
-}else{
-
-    
-}
-
- ?>
-
+<!-- Datatables  -->
+<div class="row">
+<div class="col-12">
 <div class="card">
     <div class="card-header">
         <h5 class="card-title mb-0">Registred Branches</h5>
     </div><!-- end card header -->
 
-    <div class="card-body">
+<div class="card-body">
         <?php
-    include "./includes/dbhandle.php";
-
+    $tableName = "branches";
+    $tableid = "id";
     $sql = "SELECT * FROM branches";
     if($result = mysqli_query($con, $sql)){
         if(mysqli_num_rows($result) > 0){
@@ -124,7 +126,7 @@ if (isset($_GET['edit'])) {
                         <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
                             <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
                         </a>
-                        <a href='delete.php?id=".$row['id']."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
+                        <a href='core/delete.php?id=".$row['id']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
                             <i class='mdi mdi-delete fs-14 text-danger'></i>
                         </a>
                     </td>";
@@ -142,18 +144,10 @@ if (isset($_GET['edit'])) {
     ?>
     </div>
 </div>
-
-
-
-
 </div>
 
 
-
-
-
 </div>
-
 </div> <!-- container-fluid -->
 </div> <!-- content -->
 

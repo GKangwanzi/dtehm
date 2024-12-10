@@ -1,7 +1,18 @@
+
 <?php include "includes/head.php" ?>
 
 <!-- Left Sidebar Start -->
-<?php include 'includes/left-menu.php'; ?>
+<?php 
+    if ($_SESSION['role']=='admin') { 
+        include 'includes/left-menu.php';
+    }elseif($_SESSION['role']=='member') { 
+        include 'includes/menu-member.php';
+    }elseif($_SESSION['role']=='stockist') { 
+        include 'includes/menu-stockist.php';
+    }else{
+
+    }
+ ?>
 <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -298,7 +309,7 @@
                                                     <td>
                                                         <span class="badge bg-info-subtle text-info fw-semibold">Pending</span>
                                                     </td>
-                                                    <td>                                                       
+                                                    <td>                                                        
                                                         <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
                                                             <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
                                                         </a>

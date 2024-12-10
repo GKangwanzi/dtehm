@@ -1,7 +1,17 @@
 <?php include "includes/head.php" ?>
 
 <!-- Left Sidebar Start -->
-<?php include 'includes/left-menu.php'; ?>
+<?php 
+    if ($_SESSION['role']=='admin') { 
+        include 'includes/left-menu.php';
+    }elseif($_SESSION['role']=='member') { 
+        include 'includes/menu-member.php';
+    }elseif($_SESSION['role']=='stockist') { 
+        include 'includes/menu-stockist.php';
+    }else{
+
+    }
+ ?>
 <!-- Left Sidebar End -->
 
 <!-- ============================================================== -->

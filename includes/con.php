@@ -1,0 +1,1 @@
+<?php    $db = new Database("localhost", "root", "", "dtehm");

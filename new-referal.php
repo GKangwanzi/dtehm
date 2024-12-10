@@ -2,7 +2,17 @@
 
 
 <!-- Left Sidebar Start -->
-<?php include 'includes/left-menu.php'; ?>
+<?php 
+    if ($_SESSION['role']=='admin') { 
+        include 'includes/left-menu.php';
+    }elseif($_SESSION['role']=='member') { 
+        include 'includes/menu-member.php';
+    }elseif($_SESSION['role']=='stockist') { 
+        include 'includes/menu-stockist.php';
+    }else{
+
+    }
+ ?>
 <!-- Left Sidebar End -->
 
 <!-- ============================================================== -->
@@ -61,11 +71,9 @@
     <input type="text" id="simpleinput" class="form-control">
 </div>
 
-</form>
 </div>
 
 <div class="col-lg-6">
-<form>
 <div class="mb-3">
 <label for="simpleinput" class="form-label">Password</label>
 <input type="text" id="simpleinput" class="form-control">
@@ -76,12 +84,24 @@
 </div>
 <div class="mb-3">
     <label for="example-select" class="form-label">Refered By</label>
-    <select class="form-select" id="example-select">
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4</option>
-        <option>5</option>
+    <select class="form-select" id="example-select" class="choices form-select" name="category">
+        <option>Select Category</option>
+        <?php 
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM users";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['userID'].'>' 
+                        . $row['fname'].' '. $row['lname'] . '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+        
     </select>
 </div>
 <div class="mb-3">

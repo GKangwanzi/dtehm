@@ -87,13 +87,13 @@ if (isset($_POST['logout'])) {
                                     </div>
         
                                     <!-- item-->
-                                    <a href="pages-profile.html" class="dropdown-item notify-item">
+                                    <a href="#" class="dropdown-item notify-item">
                                         <i class="mdi mdi-account-circle-outline fs-16 align-middle"></i>
                                         <span>My Account</span>
                                     </a>
         
                                     <!-- item-->
-                                    <a href="auth-lock-screen.html" class="dropdown-item notify-item">
+                                    <a href="#" class="dropdown-item notify-item">
                                         <i class="mdi mdi-lock-outline fs-16 align-middle"></i>
                                         <span>Lock Screen</span>
                                     </a>

@@ -10,7 +10,7 @@
                                     <img src="assets/images/logo-sm.png" alt="" height="22">
                                 </span>
                                 <span class="logo-lg">
-                                    <img src="assets/images/logo-light.png" alt="" height="40">
+                                    <img src="assets/images/logo-stockist.png" alt="" height="40">
                                 </span>
                             </a>
                             <a href="index.html" class="logo logo-dark">
@@ -101,35 +101,6 @@
                                     </ul>
                                 </div>
                             </li>
-
-
-
-                            <li>
-                                <a href="#sidebarMembers" data-bs-toggle="collapse">
-                                    <i data-feather="users"></i>
-                                    <span> Members </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <div class="collapse" id="sidebarMembers">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="branches.php" class="tp-link">Branches</a>
-                                        </li>
-                                        <li>
-                                            <a href="members.php" class="tp-link">Members</a>
-                                        </li>
-                                        <li>
-                                            <a href="membership.php" class="tp-link">Memberships</a>
-                                        </li>
-                                        
-
-                                    </ul>
-                                </div>
-                            </li>
-
-                
-                            
-
 
                             <li>
                                 <a href="#" class="tp-link">

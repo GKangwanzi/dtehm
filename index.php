@@ -77,14 +77,23 @@ if (isset($_POST['login'])) {
         if ($password == $user["password"]) {
             session_start();
             $_SESSION['user'] = $user["fname"];
+            $_SESSION['role'] = $user["role"];
+            $_SESSION['id'] = $user["memberID"];
 
             $lastLogin = (date("Y/m/d h:i:s a"));
             $sql = "UPDATE users SET lastLogin='$lastLogin' WHERE username='$username'";
 
-            if(mysqli_query($con, $sql)){
+            if(mysqli_query($con, $sql) AND $_SESSION['role'] == 'admin'){
                 header("Location: dash.php"); 
                 die();
-                } else{
+            } elseif(mysqli_query($con, $sql) AND $_SESSION['role'] == 'member'){
+                header("Location: dash-m.php"); 
+                die();
+                }elseif(mysqli_query($con, $sql) AND $_SESSION['role'] == 'stockist'){
+                header("Location: dash-s.php"); 
+                die();
+                }else{
+                die();
                     echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
                 }
          

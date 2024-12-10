@@ -35,6 +35,10 @@ class Database {
         return $this->connection->insert_id;
     }
 
+
+
+    
+
     public function close() {
         $this->connection->close();
     }
