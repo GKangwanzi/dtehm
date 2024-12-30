@@ -67,21 +67,10 @@
                             
 
                             <li>
-                                <a href="#sidebarDeposits" data-bs-toggle="collapse">
+                                <a href="./deposits.php">
                                     <i data-feather="dollar-sign"></i>
                                     <span> Deposits </span>
-                                    <span class="menu-arrow"></span>
                                 </a>
-                                <div class="collapse" id="sidebarDeposits">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="#" class="tp-link">Initiations</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="tp-link">Successful deposits</a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
 
                             <li>
@@ -93,10 +82,10 @@
                                 <div class="collapse" id="sidebarExpages">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="pages-starter.html" class="tp-link">Pending withdraws</a>
+                                            <a href="withdraws-pending.php" class="tp-link">Pending withdraws</a>
                                         </li>
                                         <li>
-                                            <a href="pages-profile.html" class="tp-link">Approved withdraws</a>
+                                            <a href="withdraws-approved.php" class="tp-link">Approved withdraws</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -125,6 +114,14 @@
 
                                     </ul>
                                 </div>
+                            </li>
+
+
+                             <li>
+                                <a href="stockists.php">
+                                    <i data-feather="users"></i>
+                                    <span> Stockists </span>
+                                </a>
                             </li>
 
                 

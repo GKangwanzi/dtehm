@@ -33,42 +33,23 @@ include 'includes/menu-stockist.php';
 </div>
 </div>
 
-<!-- Start Row -->
 <div class="row">
-    <?php
-$tableName = "products";
-$tableid = "prodID";
-$sql = "SELECT * FROM $tableName";
-if($result = mysqli_query($con, $sql)){
-if(mysqli_num_rows($result) > 0){
+    <div class="card">
 
-while($row = mysqli_fetch_array($result)){
-echo "<div class='col-sm-6 col-md-4 col-xl-3'>
-        <!-- Simple card -->
-        <div class='card d-block'>
-            <img class='card-img-top rounded-top' src='photos/".$row['photo']."' alt='Card image cap'>
-            <div class='card-body'>
-                <h4 class='card-title'>".$row['name']."</h4>
-                <p class='card-text text-muted'>".substr_replace($row['description'],"...", 90)."</p>
-                <a href='buy.php?id=".$row['prodID']."' class='btn btn-primary'>View Details</a>
-            </div> <!-- end card-body--> 
-        </div> <!-- end card-->
-    </div><!-- end col -->";
-
-} 
-// Free result set
-mysqli_free_result($result);
-} else{
-echo "No records matching your query were found.";
-}
-} else{
-echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-}
-?>
-    
+    <div class="card-body">
+        <div>
+            <div class="alert alert-primary mb-0" role="alert">
+                <h4 class="alert-heading">Well done!</h4>
+                <p>Your order has been submitted. Your stockist will contact you shortly to arrange delivery of your package.</p>
+                <hr>
+                <p class="mb-0">Thank you for using DTEHM!</p>
+            </div>
+        </div>
+    </div> <!-- end card body -->
 
 </div>
-<!-- End Start -->
+
+</div>
 
 
 </div> <!-- container-fluid -->

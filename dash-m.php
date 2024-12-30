@@ -1,4 +1,7 @@
-<?php include "includes/head.php" ?>
+<?php 
+include "includes/head.php";
+include "includes/dbhandle.php";
+?>
 
 <!-- Left Sidebar Start -->
 <?php
@@ -10,7 +13,7 @@ include 'includes/menu-member.php';
 include 'includes/menu-stockist.php';
 }else{
 
-}
+} 
 ?>
 <!-- Left Sidebar End -->
 
@@ -45,7 +48,20 @@ include 'includes/menu-stockist.php';
 </div>
 <p class="mb-0 text-light fs-15">Wallet Balance</p>
 </div>
-<h3 class="mb-0 fs-24 text-white me-2">Ugx 25,894</h3>
+<h3 class="mb-0 fs-24 text-white me-2">
+    <?php 
+        $memberid = $_SESSION['id'];
+        $sql = "SELECT SUM(amount) AS wtotal FROM deposits WHERE member = '$memberid'AND status='Complete' ";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                echo "Ugx ".number_format($row['wtotal'], 0, '.', ',');
+                mysqli_free_result($result);
+            } else{
+                echo "Ugx 0";
+            }
+        }
+        ?></h3>
 </div>
 
 </div>
@@ -68,7 +84,39 @@ include 'includes/menu-stockist.php';
 </div>
 <p class="mb-0 text-light fs-15">Commission Balance</p>
 </div>
-<h3 class="mb-0 fs-24 text-white me-2">Ugx 32,000</h3>
+<h3 class="mb-0 fs-24 text-white me-2">
+<?php 
+$memberid = $_SESSION['id'];
+$sql = "SELECT SUM(amount) AS ctotal FROM commissions WHERE member = '$memberid' ";
+if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                $totalcommission = $row['ctotal'];
+            } else{
+                $totalcommission = 0;
+            }
+        }
+
+
+$sql = "SELECT SUM(amount) AS cwtotal FROM commission_withdraws WHERE member = '$memberid' AND status='paid' ";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_array($result);
+if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                $totalwcommission = $row['cwtotal'];
+            } else{
+                $totalwcommission = 0;
+            }
+        }
+
+
+$balance = $totalcommission - $totalwcommission;
+
+echo "Ugx ".number_format($balance, 0, '.', ',');
+
+?>
+</h3>
 </div>
 
 </div>
@@ -92,7 +140,21 @@ include 'includes/menu-stockist.php';
 </div>
 <p class="mb-0 text-light fs-15">Total Deposits</p>
 </div>
-<h3 class="mb-0 fs-24 text-white me-2">Ugx 15,894</h3>
+<h3 class="mb-0 fs-24 text-white me-2">
+    <?php 
+        $memberid = $_SESSION['id'];
+        include "includes/dbhandle.php";
+        $sql = "SELECT SUM(amount) AS wtotal FROM deposits WHERE member = '$memberid'AND status='Complete' ";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                echo "Ugx ".number_format($row['wtotal'], 0, '.', ',');
+                mysqli_free_result($result);
+            } else{
+                echo "Ugx 0";
+            }
+        }
+        ?></h3>
 </div>
 
 </div>
@@ -113,7 +175,23 @@ include 'includes/menu-stockist.php';
 </div>
 <p class="mb-0 text-light fs-15">Total Withdraw</p>
 </div>
-<h3 class="mb-0 fs-24 text-white me-2">Ugx 2,894</h3>
+<h3 class="mb-0 fs-24 text-white me-2">
+<?php 
+$memberid = $_SESSION['id'];
+
+$sql = "SELECT SUM(amount) AS tcwtotal FROM commission_withdraws WHERE member = '$memberid'";
+if($result = mysqli_query($con, $sql)){
+    if(mysqli_num_rows($result) > 0){
+        $row = mysqli_fetch_array($result);
+        echo "Ugx ".number_format($row['tcwtotal'], 0, '.', ',');
+        mysqli_free_result($result);
+    } else{
+        echo "Ugx 0";
+    }
+}
+?>
+
+</h3>
 </div>
 
 </div>
@@ -144,120 +222,58 @@ include 'includes/menu-stockist.php';
 <thead>
 <tr>
 <th>Order ID</th>
-<th>Customer Name</th>
 <th>Product</th>
-<th>Total</th>
+<th>Total</th> 
 <th>Created</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
 </thead>
+<?php
 
-<tr>
-<td>
-<a href="javascript:void(0);" class="text-muted">#4125</a>
-</td>
-<td class="d-flex align-items-center">
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID WHERE orders.member='$memberid' ";
+if($result = mysqli_query($con, $sql)){
+if(mysqli_num_rows($result) > 0){
+while($row = mysqli_fetch_array($result)){
+echo "<tr>"; 
+echo "<td>
+<a href='javascript:void(0);' class='text-muted'>".$row['orderid']."</a>
+</td>";
 
-<div>
-    <p class="mb-0 fw-medium fs-14">Randal Dare</p>
-    <p class="text-muted fs-13 mb-0">0756338621</p>
-</div>
-</td>
-<td>
-<p class="mb-0">93</p>
-</td>
-<td>
-<p class="mb-0">$568.00</p>
-</td>
-<td>
-<p class="mb-0">January 19, 2023</p>
-</td>
-<td>
-<span class="badge bg-primary-subtle text-primary fw-semibold">Delivered</span>
-</td>
-<td>                                                       
-<a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-    <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-</a>
-<a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-    <i class="mdi mdi-delete fs-14 text-danger"></i>
-</a>
-</td>
-</tr>
+echo "<td>
+<p class='mb-0'>".$row['name']."</p>
+</td>";
 
-<tr>
-<td>
-<a href="javascript:void(0);" class="text-muted">#6532</a>
-</td>
-<td class="d-flex align-items-center">
+echo "<td>
+<p class='mb-0'>".$row['total']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['date']."</p>
+</td>";
+echo "<td>";
+if ($row['status']='pending') {
+    echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper($row['status'])."</span>";
+}elseif($row['status']='delivered'){
+    echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
+    
+}
 
-<div>
-    <p class="mb-0 fw-medium fs-14">Bickle Bob</p>
-    <p class="text-muted fs-13 mb-0">0778469923</p>
-</div>
-</td>
-<td>
-<p class="mb-0">56</p>
-</td>
-<td>
-<p class="mb-0">$398.00</p>
-</td>
-<td>
-<p class="mb-0">April 25, 2023</p>
-</td>
-<td>
-<span class="badge bg-danger-subtle text-danger fw-semibold">Cancelled</span>
-</td>
-<td>                                                       
-<a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-    <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
+echo "</td>";
+echo "<td>                                                      
+<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+    <i class='mdi mdi-eye-outline fs-14 text-primary'></i>
 </a>
-<a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-    <i class="mdi mdi-delete fs-14 text-danger"></i>
-</a>
-</td>
-</tr>
-
-<tr>
-<td>
-<a href="javascript:void(0);" class="text-muted">#7405</a>
-</td>
-<td class="d-flex align-items-center">
-
-<div>
-    <p class="mb-0 fw-medium fs-14">Emma Wilson</p>
-    <p class="text-muted fs-13 mb-0">0744973644</p>
-</div>
-</td>
-<td>
-<p class="mb-0">68</p>
-</td>
-<td>
-<p class="mb-0">$652.00</p>
-</td>
-<td>
-<p class="mb-0">September 24, 2023</p>
-</td>
-<td>
-<span class="badge bg-info-subtle text-info fw-semibold">Pending</span>
-</td>
-<td>                                                       
-<a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-    <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-</a>
-<a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-    <i class="mdi mdi-delete fs-14 text-danger"></i>
-</a>
-</td>
-</tr>
+</td>";
+echo "</tr>";
+}}}
+?>
 
 
 </table>
 </div>    
 </div>
 
-
+ 
 </div>
 </div>
 <!-- End Recent Order -->

@@ -40,28 +40,84 @@
 if (isset($_POST['register'])){
 
     $mID        = $_POST["memberid"];
-    $fname = $_POST["firstname"];
-    $lname       = $_POST["lastname"];
-    $email = $_POST["email"];
-    $phone        = $_POST["phone"];
-    $branch = $_POST["branch"];
-    $message = "This is good news";
-    $password = "DH".mt_rand(10, 1000);
-    $message = "DTEHM Account details, username $phone  password $password ";
+    $referalID  = $_POST["referal"];
+    $fname      = $_POST["firstname"];
+    $lname      = $_POST["lastname"];
+    $email      = $_POST["email"];
+    $phone      = $_POST["phone"];
+    $branch     = $_POST["branch"];
+    $message    = "This is good news";
+    $password   = "DH".mt_rand(10, 1000);
+    $message    = "DTEHM Account details, username $phone  password $password ";
+
+    $sql2 = "SELECT * FROM referrals WHERE referrer_id='$referalID' ";
+    $result = mysqli_query($con, $sql2);
+    $row = mysqli_fetch_array($result);
+    $level2 = $row['level1'] ?? null;
+
+    $sql3 = "SELECT * FROM referrals WHERE referrer_id='$level2' ";
+    $result = mysqli_query($con, $sql3);
+    $row = mysqli_fetch_array($result);
+    $level3 = $row['level1'] ?? null;;
+
+    $sql4 = "SELECT * FROM referrals WHERE referrer_id='$level3' ";
+    $result = mysqli_query($con, $sql4);
+    $row = mysqli_fetch_array($result);
+    $level4 = $row['level1'] ?? null;;
+
+    $sql5 = "SELECT * FROM referrals WHERE referrer_id='$level4' ";
+    $result = mysqli_query($con, $sql5);
+    $row = mysqli_fetch_array($result);
+    $level5 = $row['level1'] ?? null;;
+
+    $sql6 = "SELECT * FROM referrals WHERE referrer_id='$level5' ";
+    $result = mysqli_query($con, $sql6);
+    $row = mysqli_fetch_array($result);
+    $level6 = $row['level1'] ?? null;;
+
+    $sql7 = "SELECT * FROM referrals WHERE referrer_id='$level6' ";
+    $result = mysqli_query($con, $sql7);
+    $row = mysqli_fetch_array($result);
+    $level7 = $row['level1'] ?? null;;
+
+    $sql8 = "SELECT * FROM referrals WHERE referrer_id='$level7' ";
+    $result = mysqli_query($con, $sql8);
+    $row = mysqli_fetch_array($result);
+    $level8 = $row['level1'] ?? null;;
+
+
 
 try {   
     // begin atomic transaction
 $stmt = $con->begin_transaction();
 
-// prepare statement for insert
+// insert into members
 $stmt = $con->prepare('INSERT INTO members (memberID, fname, lname, email, phone, branch, password) VALUES (?, ?, ?, ?, ?, ?, ?)');
 $stmt->bind_param('sssssss', $mID, $fname, $lname, $email, $phone, $branch, $password);
 $stmt->execute();
 
-// prepare statement for delete
-$stmt = $con->prepare('INSERT INTO referrals (referrer_id, referree_id)
-    VALUES (?, ?)');
-$stmt->bind_param('ss', $mID, $mID);
+// insert into referrals
+$stmt = $con->prepare('INSERT INTO referrals (referrer_id, level1, level2, level3, level4, level5, level6, level7, level8)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+$stmt->bind_param('sssssssss', $mID, $referalID, $level2, $level3, $level4, $level5, $level6, $level7, $level8);
+$stmt->execute();
+
+// insert into commissions
+$date = date('yyyy-mm-dd');
+$commission = "10000";
+$commissionName = "Commision from new member";
+$stmt = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $referalID, $commissionName, $commission);
+$stmt->execute();
+
+// insert into users
+$date = date('yyyy-mm-dd');
+$role = "member";
+$commissionName = "Commision from new member";
+$stmt = $con->prepare('INSERT INTO users (memberID, fname, lname, username, password, role)
+    VALUES (?, ?, ?, ?, ?, ?)');
+$stmt->bind_param('ssssss', $mID, $fname, $lname, $mID, $password, $role);
 $stmt->execute();
 
 // Commit the transaction
@@ -69,7 +125,7 @@ $stmt->execute();
     SendSMS('non_customised','bulk', $phone, $message);
     echo "
         <div class='alert alert-primary alert-dismissible fade show' role='alert'>
-            Branch registration successful!
+            Member registration successful!
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
             </button>
         </div>";
@@ -126,7 +182,7 @@ $stmt->execute();
 <?php
 $tableName = "members";
 $tableid = "memberID";
-$sql = "SELECT * FROM $tableName";
+$sql = "SELECT * FROM $tableName INNER JOIN branches ON members.branch=branches.id";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
@@ -144,7 +200,7 @@ echo "<tr>";
 echo "<td>" . $row['memberID'] . "</td>";
 echo "<td>" . $row['fname'].' '.$row['lname'] . "</td>";
 echo "<td>" . $row['phone'] . "</td>";
-echo "<td>" . $row['branch'] . "</td>";
+echo "<td>" . $row['name'] . "</td>";
 echo "<td>                                                       
     <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
         <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
@@ -210,7 +266,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         if($result = mysqli_query($con, $sql)){
             if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){
-                        echo '<option value='.$row['is'].'>' 
+                        echo '<option value='.$row['id'].'>' 
                         . $row['name']. '</option>';
                 }
                 mysqli_free_result($result);
@@ -223,7 +279,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     </select>
 </div>
 <div class="mb-3">
-<input type="text" id="simpleinput" placeholder="Enter referal ID" class="form-control">
+<input type="text" name="referal" id="simpleinput" placeholder="Enter referal ID" class="form-control">
 </div>
 <div class="mb-3">
     <button name="register" class="btn btn-primary form-control" type="submit">Register</button>

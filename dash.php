@@ -1,5 +1,8 @@
 
-<?php include "includes/head.php" ?>
+<?php 
+include "includes/head.php";
+include "includes/dbhandle.php";
+ ?>
 
 <!-- Left Sidebar Start -->
 <?php 
@@ -12,7 +15,7 @@
     }else{
 
     }
- ?>
+ ?> 
 <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->
@@ -128,206 +131,86 @@
 
 
 
-                        <div class="row">
-                            <!-- Start Recent Order -->
-                            <div class="col-md-12">
-                                <div class="card overflow-hidden mb-0">
-                                    <div class="card-header">
-                                        <div class="d-flex align-items-center">
-                                            <h5 class="card-title text-black mb-0">Recent Order</h5>
-                                        </div>
-                                    </div>
+<div class="row">
+<!-- Start Recent Order -->
+<div class="col-md-12">
+<div class="card overflow-hidden mb-0">
+<div class="card-header">
+    <div class="d-flex align-items-center">
+        <h5 class="card-title text-black mb-0">Recent Order</h5>
+    </div>
+</div>
 
-                                    <div class="card-body p-0">
-                                        <div class="table-responsive">
-                                            <table class="table table-traffic mb-0">
+<div class="card-body p-0">
+<div class="table-responsive">
+<table class="table table-traffic mb-0">
 
-                                                <thead>
-                                                    <tr>
-                                                        <th>Order ID</th>
-                                                        <th>Customer Name</th>
-                                                        <th>Product</th>
-                                                        <th>Total</th>
-                                                        <th>Created</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
+<thead>
+<tr>
+    <th>Order ID</th>
+    <th>Customer Name</th>
+    <th>Product</th>
+    <th>Qty</th>
+    <th>Total</th>
+    <th>Created</th>
+    <th>Status</th>
+    <th>Action</th>
+</tr>
+</thead>
 
-                                                <tr>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="text-muted">#4125</a>
-                                                    </td>
-                                                    <td class="d-flex align-items-center">
-                                                       
-                                                        <div>
-                                                            <p class="mb-0 fw-medium fs-14">Randal Dare</p>
-                                                            <p class="text-muted fs-13 mb-0">0756338621</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">93</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">$568.00</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">January 19, 2023</p>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-primary-subtle text-primary fw-semibold">Delivered</span>
-                                                    </td>
-                                                    <td>                                                       
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+            <?php
 
-                                                <tr>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="text-muted">#6532</a>
-                                                    </td>
-                                                    <td class="d-flex align-items-center">
-                                                        
-                                                        <div>
-                                                            <p class="mb-0 fw-medium fs-14">Bickle Bob</p>
-                                                            <p class="text-muted fs-13 mb-0">0778469923</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">56</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">$398.00</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">April 25, 2023</p>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-danger-subtle text-danger fw-semibold">Cancelled</span>
-                                                    </td>
-                                                    <td>                                                       
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID";
+if($result = mysqli_query($con, $sql)){
+if(mysqli_num_rows($result) > 0){
+while($row = mysqli_fetch_array($result)){
+echo "<tr>"; 
+echo "<td>
+<a href='javascript:void(0);' class='text-muted'>".$row['orderid']."</a>
+</td>";
 
-                                                <tr>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="text-muted">#7405</a>
-                                                    </td>
-                                                    <td class="d-flex align-items-center">
-                                                        
-                                                        <div>
-                                                            <p class="mb-0 fw-medium fs-14">Emma Wilson</p>
-                                                            <p class="text-muted fs-13 mb-0">0744973644</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">68</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">$652.00</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">September 24, 2023</p>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-info-subtle text-info fw-semibold">Pending</span>
-                                                    </td>
-                                                    <td>                                                       
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+echo "<td>
+<p class='mb-0'>".$row['fname']." ".$row['lname']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['name']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['qty']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['total']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['date']."</p>
+</td>";
+echo "<td>";
+if ($row['status']='pending') {
+echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper($row['status'])."</span>";
+}elseif($row['status']='delivered'){
+echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
 
-                                                <tr>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="text-muted">#4526</a>
-                                                    </td>
-                                                    <td class="d-flex align-items-center">
-                                                        
-                                                        <div>
-                                                            <p class="mb-0 fw-medium fs-14">Hugh Jackma</p>
-                                                            <p class="text-muted fs-13 mb-0">0705407004</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">52</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">$746.00</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">July 28, 2023</p>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-warning-subtle text-warning fw-semibold">Shipped</span>
-                                                    </td>
-                                                    <td>                                                       
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+}
 
-                                                <tr>
-                                                    <td>
-                                                        <a href="javascript:void(0);" class="text-muted">#1054</a>
-                                                    </td>
-                                                    <td class="d-flex align-items-center">
-                                                        
-                                                        <div>
-                                                            <p class="mb-0 fw-medium fs-14">Angelina Hose</p>
-                                                            <p class="text-muted fs-13 mb-0">0785407551</p>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">45</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">$205.00</p>
-                                                    </td>
-                                                    <td>
-                                                        <p class="mb-0">June 09, 2023</p>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge bg-info-subtle text-info fw-semibold">Pending</span>
-                                                    </td>
-                                                    <td>                                                        
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="Edit">
-                                                            <i class="mdi mdi-pencil-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+echo "</td>";
+echo "<td>                                                      
+<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+<i class='mdi mdi-eye-outline fs-14 text-primary'></i>
+</a>
+</td>";
+echo "</tr>";
+}}}
+?>
 
-                                            </table>
-                                        </div>    
-                                    </div>
+        </table>
+    </div>    
+</div>
 
 
-                                </div>
-                            </div>
-                            <!-- End Recent Order -->
-                        </div>
+</div>
+</div>
+<!-- End Recent Order -->
+</div>
 
                     </div> <!-- container-fluid -->
                 </div> <!-- content -->

@@ -35,7 +35,7 @@
     </div>
 
     <div class="text-end">
-        <?php 
+<?php 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 try {
@@ -104,7 +104,7 @@ try {
     </div><!-- end card header -->
 
 <div class="card-body">
-        <?php
+    <?php
     $tableName = "branches";
     $tableid = "id";
     $sql = "SELECT * FROM branches";
@@ -160,7 +160,7 @@ try {
 </div>
 </div>
 </div>
-</footer>
+</footer> 
 <!-- end Footer -->
 
 </div>

@@ -31,7 +31,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="./dash.php" >
+                                <a href="./dash-m.php" >
                                     <i data-feather="home"></i>
                                     <span> Dashboard </span>
                                 </a>
@@ -52,14 +52,14 @@
                             </li>
 
                             <li>
-                                <a href="#" >
+                                <a href="deposit.php" >
                                     <i data-feather="dollar-sign"></i>
                                     <span> Deposits </span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#" >
+                                <a href="withdraws.php" >
                                     <i data-feather="dollar-sign"></i>
                                     <span> Withdraws </span>
                                 </a>
@@ -69,13 +69,6 @@
                                 <a href="#" class="tp-link">
                                     <i data-feather="users"></i>
                                     <span> My Referrals </span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="tp-link">
-                                    <i data-feather="file-text"></i>
-                                    <span> Transactions </span>
                                 </a>
                             </li>
 

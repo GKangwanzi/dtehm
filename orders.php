@@ -1,4 +1,7 @@
-<?php include "includes/head.php" ?>
+<?php 
+include "includes/head.php"; 
+include "includes/dbhandle.php";
+?>
 
 <!-- Left Sidebar Start -->
 <?php 
@@ -33,111 +36,77 @@
 
 
 
-                        <!-- Datatables  -->
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="card">
+<!-- Datatables  -->
+<div class="row">
+<div class="col-12">
+<div class="card">
 
-                                    <div class="card-header">
-                                        <h5 class="card-title mb-0">Products</h5>
-                                    </div><!-- end card header -->
+    <div class="card-header">
+        <h5 class="card-title mb-0">All Orders</h5>
+    </div><!-- end card header -->
 
-                                    <div class="card-body">
-                                        <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap">
-                                            <thead>
-                                            <tr>
-                                                <th>Order ID</th>
-                                                <th>Product Name</th>
-                                                <th>Date</th>
-                                                <th>Amount</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-                                                <tr>
-                                                    <td>#002</td>
-                                                    <td>Noni Juice Mix</td>
-                                                    <td>2023-12-22</td>
-                                                    <td>UGX 203,000</td>
-                                                    <td>
-                                                        <span class="badge bg-primary-subtle text-primary fw-semibold">Delivered</span>
-                                                    </td>
-                                                     <td>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="View Details">
-                                                            <i class="mdi mdi-eye-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete order">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#002</td>
-                                                    <td>Noni Juice Mix</td>
-                                                    <td>2023-12-22</td>
-                                                    <td>UGX 203,000</td>
-                                                    <td>
-                                                        <span class="badge bg-warning-subtle text-warning fw-semibold">Pending</span>
-                                                    </td>
-                                                     <td>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="View Details">
-                                                            <i class="mdi mdi-eye-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete order">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#002</td>
-                                                    <td>Cabul-500 Capsules</td>
-                                                    <td>2023-12-22</td>
-                                                    <td>UGX 105,000</td>
-                                                    <td>
-                                                        <span class="badge bg-danger-subtle text-danger fw-semibold">Cancelled</span>
-                                                    </td>
-                                                     <td>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="View Details">
-                                                            <i class="mdi mdi-eye-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete order">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>#002</td>
-                                                    <td>Noni Juice Mix</td>
-                                                    <td>2023-12-22</td>
-                                                    <td>UGX 203,000</td>
-                                                    <td>
-                                                        <span class="badge bg-primary-subtle text-primary fw-semibold">Completed</span>
-                                                    </td>
-                                                     <td>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-primary-subtle me-1" data-bs-toggle="tooltip" data-bs-original-title="View Details">
-                                                            <i class="mdi mdi-eye-outline fs-14 text-primary"></i>
-                                                        </a>
-                                                        <a aria-label="anchor" class="btn btn-sm bg-danger-subtle" data-bs-toggle="tooltip" data-bs-original-title="Delete order">
-                                                            <i class="mdi mdi-delete fs-14 text-danger"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+    <div class="card-body">
+        <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap">
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Product</th>
+<th>Total</th> 
+<th>Date</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+</thead>
+<?php
+$memberid = $_SESSION['id'];
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID";
+if($result = mysqli_query($con, $sql)){
+if(mysqli_num_rows($result) > 0){
+while($row = mysqli_fetch_array($result)){
+echo "<tr>"; 
+echo "<td>
+<a href='javascript:void(0);' class='text-muted'>".$row['orderid']."</a>
+</td>";
 
+echo "<td>
+<p class='mb-0'>".$row['fname']." ".$row['lname']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['name']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['total']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['date']."</p>
+</td>";
+echo "<td>";
+if ($row['status']='pending') {
+echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper($row['status'])."</span>";
+}elseif($row['status']='delivered'){
+echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
 
-                                                
-                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
+}
 
-                                </div>
-                            </div>
-                        </div>
+echo "</td>";
+echo "<td>                                                      
+<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+<i class='mdi mdi-eye-outline fs-14 text-primary'></i>
+</a>
+</td>";
+echo "</tr>";
+}}}
+?>
+        </table>
+    </div>
 
-                    </div> <!-- container-fluid -->
-                </div> <!-- content -->
+</div>
+</div>
+</div>
+
+</div> <!-- container-fluid -->
+</div> <!-- content -->
 
                 <!-- Footer Start -->
                 <footer class="footer">
