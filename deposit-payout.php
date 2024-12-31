@@ -1,8 +1,10 @@
-<?php include "core/insert.php" ?>
-<?php include "includes/dbhandle.php" ?>
-<?php include "includes/con.php" ?>
-<?php include "includes/head.php" ?>
-<?php include "core/sms.php" ?>
+<?php 
+include "core/insert.php"; 
+include "includes/dbhandle.php";
+include "includes/con.php";
+include "includes/head.php";
+include "core/sms.php" 
+?>
 
 <!-- Left Sidebar Start -->
 <?php 
@@ -33,59 +35,94 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
             Deposit
         </button>
+        <div align="center">
+    
+</div>
     </div>
 
 <div class="text-end">
+
+ 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Retrieve the form data
-    $accountNo = 'RELD30F5323FB'; // Replace with your account number
-    $reference = bin2hex(random_bytes(16)); // Generate a unique reference (32 characters)
-    $msisdn = $_POST['msisdn'];
-    $currency = $_POST['currency'];
-    $amount = $_POST['amount'];
-    $description = $_POST['description'] ?? 'Payment Request';
 
-    // Prepare the API request
-    $url = 'https://payments.relworx.com/api/mobile-money/request-payment';
-    $apiKey = 'd399cf9d73e1b2.xa3RB1GYpqhu6YVHztypkg'; // Replace with your actual API key
+if (isset($_POST['pay'])){
+$client_id = "pay-d1b52074-078d-454f-8919-5358cc4c951b";
+$client_secret = "IO-uJSnPjbYN9BaOUJQB2UukDj3wKOSpU2ap";
+$auth_url = "https://id.iotec.io/connect/token";
+$payment_url = "https://pay.iotec.io/api/collections/collect";
 
-    $data = [
-        'account_no' => $accountNo,
-        'reference' => $reference,
-        'msisdn' => $msisdn,
-        'currency' => $currency,
-        'amount' => (float)$amount,
-        'description' => $description,
-    ];
+// Step 1: Get access token
+$data = http_build_query([
+    'client_id' => $client_id,
+    'client_secret' => $client_secret,
+    'grant_type' => 'client_credentials'
+]);
 
-    $headers = [
-        'Content-Type: application/json',
-        'Accept: application/vnd.relworx.v2',
-        'Authorization: Bearer ' . $apiKey,
-    ];
+$options = [
+    'http' => [
+        'header'  => "Content-Type: application/x-www-form-urlencoded",
+        'method'  => 'POST',
+        'content' => $data
+    ]
+];
 
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+$context  = stream_context_create($options);
+$response = file_get_contents($auth_url, false, $context);
+if ($response === FALSE) {
+    die("Failed to authenticate.");
+}
 
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
+$token = json_decode($response, true)['access_token'];
 
-    // Handle the response
-    if ($httpCode === 200) {
-        $responseData = json_decode($response, true);
-        if ($responseData['success']) {
-            echo '<p>Payment request successful: ' . htmlspecialchars($responseData['message']) . '</p>';
-        } else {
-            echo '<p>Payment request failed: ' . htmlspecialchars($responseData['message']) . '</p>';
-        }
-    } else {
-        echo '<p>Failed to process payment request. HTTP Code: ' . $httpCode . '</p>';
-    }
+// Step 2: Process payment
+$payer = $_POST['payer'];
+$amount = $_POST['amount'];
+$payer_note = $_POST['payer_note'];
+$payee_note = $_POST['payee_note'];
+$wallet_id = "f72eba17-6b78-4f6a-b477-a54ff2b7f9b3";
+
+$payment_data = json_encode([
+    "category" => "MobileMoney",
+    "currency" => "UGX",
+    "walletId" => $wallet_id,
+    "externalId" => uniqid(),
+    "payer" => $payer,
+    "payerNote" => $payer_note,
+    "amount" => $amount,
+    "payeeNote" => $payee_note
+]);
+
+$options = [
+    'http' => [
+        'header'  => "Authorization: Bearer $token\r\n" .
+                     "Content-Type: application/json\r\n",
+        'method'  => 'POST',
+        'content' => $payment_data
+    ]
+];
+
+$context  = stream_context_create($options);
+$response = file_get_contents($payment_url, false, $context);
+
+if ($response === FALSE) {
+    die("Payment request failed.");
+}
+
+$transaction = json_decode($response, true);
+
+// Step 3: Save transaction to database
+$sql = "INSERT INTO commission_balance (paymentID, status, payer, amount) VALUES (?, ?, ?, ?)";
+$stmt = $con->prepare($sql);
+$stmt->bind_param("sssd", $transaction['id'], $transaction['status'], $payer, $amount);
+$stmt->execute();
+ 
+// Redirect to status check
+sleep(30);
+echo "<script type='text/javascript'> 
+window.location.replace('status_check.php?id=" . $transaction['id']."')
+</script>"; 
+//exit(header("Location: status_check.php?id=" . $transaction['id']));
+exit;
 }
 ?>
     </div>
@@ -106,35 +143,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="card-body">
 
 <?php
-$tableName = "members";
-$tableid = "memberID";
-$sql = "SELECT * FROM $tableName WHERE memberID='BG000'";
+$tableName = "commission_balance";
+$tableid = "paymentID";
+$sql = "SELECT * FROM $tableName";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
 echo "<thead>";
 echo "<tr>";
 echo "<th>ID</th>";
-echo "<th>Date</th>";
-echo "<th>Phone Number</th>";
 echo "<th>Amount</th>";
+echo "<th>Phone Number</th>";
 echo "<th>Status</th>";
+echo "<th>Date</th>";
 echo "</tr>";
 echo "</thead>";
 while($row = mysqli_fetch_array($result)){
 echo "<tr>"; 
-echo "<td>" . $row['memberID'] . "</td>";
-echo "<td>" . $row['fname'].' '.$row['lname'] . "</td>";
-echo "<td>" . $row['phone'] . "</td>";
-echo "<td>" . $row['name'] . "</td>";
-echo "<td>                                                       
-    <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
-        <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
-    </a>
-    <a href='core/delete.php?id=".$row['memberID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
-        <i class='mdi mdi-delete fs-14 text-danger'></i>
-    </a>
-</td>";
+echo "<td>" . $row['paymentID'] . "</td>";
+echo "<td>" . $row['amount']. "</td>";
+echo "<td>" . $row['payer'] . "</td>";
+echo "<td>" . $row['status'] . "</td>";
+echo "<td>" . $row['date'] . "</td>";
 echo "</tr>";
 } 
 echo "</table>";
@@ -167,7 +197,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 
 <form action="" method="POST">
 <div class="mb-3">
-<input class="form-control" type="text" id="msisdn" name="msisdn" placeholder="e.g. +256701345678" required>
+<input class="form-control" type="text" id="msisdn" name="payer" placeholder="e.g. +256701345678" required>
 </div>
 <div class="mb-3">
     <input class="form-control" id="currency" name="currency" required type="text" value="UGX" class="form-control">
@@ -176,11 +206,15 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     <input class="form-control" type="number" step="0.01" id="amount" name="amount" placeholder="e.g. 500.00" required>
 </div>
 <div class="mb-3">
-    <input class="form-control" type="text" id="description" name="description" placeholder="Payment description">
+    <input hidden class="form-control" type="text" id="description" name="payer_note" value="dtehm payment">
 </div>
 
 <div class="mb-3">
-    <button name="register" class="btn btn-primary form-control" type="submit">Initiate Payment</button>
+    <input hidden class="form-control" type="text" id="description" name="payee_note" value="dtehm payment" >
+</div>
+
+<div class="mb-3">
+    <button name="pay" class="btn btn-primary form-control" type="submit">Initiate Payment</button>
 </div>
 
 </form>

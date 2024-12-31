@@ -40,8 +40,8 @@ include 'includes/menu-stockist.php';
     <div class="card-body">
         <div>
             <div class="alert alert-primary mb-0" role="alert">
-                <h4 class="alert-heading">Well done!</h4>
-                <p>Your order has been submitted. Your stockist will contact you shortly to arrange delivery of your package.</p>
+                <h4 class="alert-heading">Deposit done!</h4>
+                <p>Your deposit was successful. Check your balance to begin payouts</p>
                 <hr>
                 <p class="mb-0">Thank you for using DTEHM!</p>
             </div>

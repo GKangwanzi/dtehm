@@ -1,5 +1,7 @@
-<?php include "includes/dbhandle.php" ?>
-<?php include "includes/head.php" ?>
+<?php 
+include "includes/dbhandle.php";
+include "includes/head.php";
+?>
 
 
 <!-- Left Sidebar Start -->
