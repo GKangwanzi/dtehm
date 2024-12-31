@@ -129,9 +129,9 @@
 
 
                             <li>
-                                <a href="#" class="tp-link">
+                                <a href="deposit-payout.php" class="tp-link">
                                     <i data-feather="users"></i>
-                                    <span> My Referrals </span>
+                                    <span> Payout Account </span>
                                 </a>
                             </li>
 
