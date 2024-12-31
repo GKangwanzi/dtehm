@@ -88,11 +88,20 @@ if (isset($_POST['register'])){
                 <div class="card-body">
 
 <?php
-$tableName = "members";
-$tableid = "memberID";
-$sql = "SELECT * FROM $tableName";
-if($result = mysqli_query($con, $sql)){
-if(mysqli_num_rows($result) > 0){
+$tableName  = "members";
+$tableid    = "memberID";
+$member     = $_SESSION['user'];
+$sql        = "SELECT * FROM $tableName";
+$sql2       = "SELECT * FROM $tableName WHERE memberID='$member' ";
+if($result = mysqli_query($con, $sql2) AND $_SESSION['role']=='member'){
+$row = mysqli_fetch_array($result);
+header('Location: dash-m.php');
+
+mysqli_free_result($result);
+
+}elseif($result = mysqli_query($con, $sql) AND $_SESSION['role']=='admin'){
+
+    if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
 echo "<thead>";
 echo "<tr>";
@@ -132,6 +141,9 @@ mysqli_free_result($result);
 } else{
 echo "No records matching your query were found.";
 }
+
+
+
 } else{
 echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 }

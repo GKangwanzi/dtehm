@@ -8,14 +8,16 @@ include "includes/dbhandle.php";
 <?php 
     if ($_SESSION['role']=='admin') { 
         include 'includes/left-menu.php';
-    }elseif($_SESSION['role']=='member') { 
+    }elseif($_SESSION['role']=='member' AND $_SESSION['membership']=='paid') { 
         include 'includes/menu-member.php';
-    }elseif($_SESSION['role']=='stockist') { 
+    }elseif($_SESSION['role']=='member' AND $_SESSION['membership']=='unpaid') { 
+        include 'includes/menu-nomember.php';
+    }elseif($_SESSION['role']=='stockist') {  
         include 'includes/menu-stockist.php';
     }else{
 
     }
- ?> 
+ ?>
 <!-- Left Sidebar End -->
 
             <!-- ============================================================== -->

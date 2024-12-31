@@ -73,12 +73,17 @@ if (isset($_POST['login'])) {
     $result = mysqli_query($con, $sql);
     $user = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
+    $sql = "SELECT * FROM members WHERE memberID='$username' ";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
+
     if ($user) {
         if ($password == $user["password"]) {
             session_start();
             $_SESSION['user'] = $user["fname"];
             $_SESSION['role'] = $user["role"];
             $_SESSION['id'] = $user["memberID"];
+            $_SESSION['membership'] = $row["membership"];
 
             $lastLogin = (date("Y/m/d h:i:s a"));
             $sql = "UPDATE users SET lastLogin='$lastLogin' WHERE username='$username'";
