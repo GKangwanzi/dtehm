@@ -128,7 +128,7 @@ echo "Error: " . $e->getMessage();
                         <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit Category'>
                             <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
                         </a>
-                        <a href='core/delete.php?id=".$row['proID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
+                        <a onclick='return checkDelete()' href='core/delete.php?id=".$row['proID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
                             <i class='mdi mdi-delete fs-14 text-danger'></i>
                         </a>
                     </td>";
@@ -178,5 +178,9 @@ echo "Error: " . $e->getMessage();
 
 </div>
 <!-- END wrapper -->
-
+<script language="JavaScript" type="text/javascript">
+function checkDelete(){
+    return confirm('Are you sure you want to delete this record?');
+}
+</script>
 <?php include "includes/footer.php" ?>

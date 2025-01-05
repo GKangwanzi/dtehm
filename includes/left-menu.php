@@ -144,7 +144,7 @@
 
                 
                             <li>
-                                <a href="#sidebarBaseui" data-bs-toggle="collapse">
+                                <a href="profile.php" >
                                     <i data-feather="user"></i>
                                     <span> Account Settings </span>
                                 </a>

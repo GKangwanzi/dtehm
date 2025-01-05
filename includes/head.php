@@ -39,7 +39,9 @@ if (isset($_POST['logout'])) {
 
         <!-- App css -->
         <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
         <!-- Icons -->
         <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
@@ -91,7 +93,7 @@ if (isset($_POST['logout'])) {
                                     </div>
         
                                     <!-- item-->
-                                    <a href="#" class="dropdown-item notify-item">
+                                    <a href="profile.php" class="dropdown-item notify-item">
                                         <i class="mdi mdi-account-circle-outline fs-16 align-middle"></i>
                                         <span>My Account</span>
                                     </a>

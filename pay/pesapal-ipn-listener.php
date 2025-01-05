@@ -77,6 +77,7 @@ if ($pesapal_notification_type == 'CHANGE' && $pesapal_transaction_tracking_id !
 
         // UPDATE YOUR DB TABLE WITH NEW STATUS FOR TRANSACTION WITH
         // pesapal_transaction_tracking_id $pesapal_transaction_tracking_id
+    
         include "../includes/dbhandle.php";
         $sql = "UPDATE deposits SET transactionID='$ pesapal_transaction_tracking_id'  WHERE transactionRef='$pesapal_merchant_reference' AND status='completed' ";
 

@@ -53,7 +53,7 @@ include 'includes/menu-stockist.php';
         <input class="form-control" hidden name="member" placeholder="Quantity" type="text" value="
         <?php 
         echo $_SESSION['id'];
-        ?>
+        ?> 
         ">
         </div>
         <div style="margin-top: 5px;" class="col-12">
@@ -83,25 +83,16 @@ include 'includes/menu-stockist.php';
             </select>
         </div>
       
-        <div class="col-12" style="margin-top: 5px;">
-            <label class="visually-hidden" >Select Balance</label>
-            <select class="form-select" name="balance" >
-                <option selected>Choose...</option>
-                <option value="wallet">Wallet Balance</option>
-                <option value="commission">Commission Balance</option>
-            </select>
-        </div>
+
         <div style="margin-top: 5px;" class="col-12">
                 <input class="form-control" name="qty" placeholder="Quantity" type="number" >
 
         </div>
-        </div>
-
-        <div class="row">
-        <div class="col-12">
+        <div class="col-12" style="margin-top: 10px;">
             <button type="submit" name="order" class="btn btn-primary">ORDER NOW</button>
         </div>
-    </div>
+        </div>
+
     </form>
     </div>
 </div>

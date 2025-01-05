@@ -54,10 +54,18 @@ include "includes/dbhandle.php";
     <?php 
         $memberid = $_SESSION['id'];
         $sql = "SELECT SUM(amount) AS wtotal FROM deposits WHERE member = '$memberid'AND status='Complete' ";
+        $sql1    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$memberid' ";
+            $result = mysqli_query($con, $sql1);
+            $row    = mysqli_fetch_array($result);
+            $totalOrders  = (int)$row['totalOrders'];
+
+
+
         if($result = mysqli_query($con, $sql)){
             if(mysqli_num_rows($result) > 0){
                 $row = mysqli_fetch_array($result);
-                echo "Ugx ".number_format($row['wtotal'], 0, '.', ',');
+                $currencyBalance = (int)$row['wtotal'] - $totalOrders;
+                echo "Ugx ".number_format($currencyBalance, 0, '.', ',');
                 mysqli_free_result($result);
             } else{
                 echo "Ugx 0";

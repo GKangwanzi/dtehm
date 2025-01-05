@@ -195,7 +195,25 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         </div>
         <div class="modal-body">
 
-<form action="" method="POST">
+<form action="https://payments.yo.co.ug/webexpress/" method="POST">
+
+
+        <input type="hidden" name="bid" value="293" />
+        <input type="hidden" name="currency" value="UGX" />
+        <input type="number" name="amount" value="125000" />
+        <input type="hidden" name="narrative" value="Bronze" />
+        <input type="hidden" name="reference" value="Bronze" />
+        <input type="hidden" name="provider_reference_text" value="Bronze" /> 
+        <input type="hidden" name="account" value="100515241441" />
+        <input type="hidden" name="return" value="paycom.php?unique_transaction_id=0&transaction_reference=0" />
+        <input type="hidden" name="prefilled_payer_email_address" value="" />
+        <input type="hidden" name="prefilled_payer_mobile_payment_msisdn" value="" />
+        <input type="hidden" name="prefilled_payer_names" value="" />
+        <input type="hidden" name="abort_payment_url" value="" />
+
+<!--
+
+
 <div class="mb-3">
 <input class="form-control" type="text" id="msisdn" name="payer" placeholder="e.g. +256701345678" required>
 </div>
@@ -212,9 +230,9 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
     <input hidden class="form-control" type="text" id="description" name="payee_note" value="dtehm payment" >
 </div>
-
+-->
 <div class="mb-3">
-    <button name="pay" class="btn btn-primary form-control" type="submit">Initiate Payment</button>
+    <button name="submit"  class="btn btn-primary form-control" type="submit">Initiate Payment</button>
 </div>
 
 </form>

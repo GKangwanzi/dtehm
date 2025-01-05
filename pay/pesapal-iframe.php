@@ -42,7 +42,7 @@ $last_name = "Mumbere";
 $email = "customer@dtehmhealth.com";
 $date = date("l jS \of F Y h:i:s A");
 $status = "pending";
-$member = $_POST["memberID"];
+$member = $_POST["memberID"]; 
 $phonenumber    = '';                                   // ONE of email or phonenumber is required
 
 // Define the callback_url i.e the redirect url, this page that will handle the
@@ -77,7 +77,9 @@ $iframe_src -> sign_request($signature_method, $consumer, $token);
 
 // Display pesapal iframe and pass in iframe_src
 if (isset($_POST['deposit'])){
- 
+    
+
+
     $sql = "INSERT INTO deposits (amount, member, phone, transactionRef, date, status)
     VALUES ('$amount', '$member', '$phonenumber', '$reference', '$date', '$status')";
 

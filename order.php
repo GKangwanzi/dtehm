@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "includes/dbhandle.php";
+include "core/walletbalance.php";
 
 if (isset($_POST['order'])){
 
@@ -9,9 +10,9 @@ $memberid   = $_POST['member'];
 $member     = str_replace(' ', '', $memberid);
 $product    = $_POST['product'];
 $stockist   = $_POST['stockist'];
-$balance    = $_POST['balance'];
 $quantity   = (int)$_POST['qty'];
 $qty        = str_replace(' ', '', $quantity);
+
 
 
 $sql = "SELECT * FROM referrals WHERE referrer_id = '$member' ";
@@ -25,20 +26,55 @@ $level5 = $row['level5'] ?? null;
 $level6 = $row['level6'] ?? null;
 $level7 = $row['level7'] ?? null;
 $level8 = $row['level8'] ?? null;
+$level9 = $row['level9'] ?? null;
+$level10 = $row['level10'] ?? null;
 
 $sql    = "SELECT * FROM products WHERE prodID = '$product' ";
 $result = mysqli_query($con, $sql);
-$row    = mysqli_fetch_array($result);
-$price  = (int)$row['price'];
+$rowp    = mysqli_fetch_array($result);
+$price  = (int)$rowp['price'];
 echo "Price is ".$price."<br/>";
 echo "Qty is ".$qty;
 var_dump($price);
 $total  = $price * $qty;
 
+
+$sql    = "SELECT SUM(amount) as totalWallet FROM deposits WHERE member = '$member' AND status='Complete' ";
+$result = mysqli_query($con, $sql);
+$row    = mysqli_fetch_array($result);
+$totalWallet  = (int)$row['totalWallet'];
+
+$sql    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$member' AND status='delivered' ";
+$result = mysqli_query($con, $sql);
+$row    = mysqli_fetch_array($result);
+$totalOrders  = (int)$row['totalOrders'];
+
+$currencyBalance = $totalWallet - $totalOrders;
+
+ 
+if ($currencyBalance > $total) {
+    // code...
+    //Update product qty
+$newQty = $rowp['qty'] - $qty;
+$stmt = $con->prepare("UPDATE products SET qty=? WHERE prodID=?");
+$stmt->bind_param('si', $newQty, $product);
+$stmt->execute();
+
+
 try {  
+
+//Register order
 $stmt   = $con->prepare('INSERT INTO orders (product, qty, total, stockist, member)
     VALUES (?, ?, ?, ?, ?)');
 $stmt->bind_param('sssss', $product, $qty, $total, $stockist, $member);
+$stmt->execute();
+
+//Giving client 10% commission
+$message    = "Purchase of product";
+$commission = 0.10 * $total;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $member, $message, $commission);
 $stmt->execute();
 
 
@@ -133,6 +169,27 @@ $stmt->bind_param('sss', $level8, $message, $commission);
 $stmt->execute();
  }
 
+ if(!empty($level9)) {
+    // code...
+    // insert into referrals
+$message    = "Purchase by ".$_SESSION['id'];
+$commission = 0.005 * $total;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level8, $message, $commission);
+$stmt->execute();
+ }
+
+ if(!empty($level10)) {
+    // code...
+    // insert into referrals
+$message    = "Purchase by ".$_SESSION['id'];
+$commission = 0.005 * $total;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level8, $message, $commission);
+$stmt->execute();
+ }
 // Commit the transaction
     $con->commit();
     header('Location: ordersuccess.php');
@@ -145,6 +202,28 @@ $stmt->execute();
         </div>";
 
 }
+
+
+}elseif($currencyBalance < $total){
+    echo "<div class='alert alert-primary alert-dismissible fade show' role='alert'>You don't have enough balance to place this order. Kindly refill your balance.<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+            </button>
+        </div>";
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 ?>

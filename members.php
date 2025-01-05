@@ -205,7 +205,7 @@ echo "<td>
     <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
         <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
     </a>
-    <a href='core/delete.php?id=".$row['memberID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
+    <a onclick='return checkDelete()' href='core/delete.php?id=".$row['memberID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>
         <i class='mdi mdi-delete fs-14 text-danger'></i>
     </a>
 </td>";
@@ -256,7 +256,24 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
     <input type="text" name="phone" id="simpleinput" placeholder="Phone Number" class="form-control">
 </div>
-
+<select id="select-state" placeholder="Pick a state...">
+    <option value="">Select a state...</option>
+    <option value="AL">Alabama</option>
+    <option value="AK">Alaska</option>
+    <option value="AZ">Arizona</option>
+    <option value="AR">Arkansas</option>
+    <option value="CA">California</option>
+    <option value="CO">Colorado</option>
+    <option value="CT">Connecticut</option>
+    <option value="DE">Delaware</option>
+    <option value="DC">District of Columbia</option>
+    <option value="FL">Florida</option>
+    <option value="GA">Georgia</option>
+    <option value="HI">Hawaii</option>
+    <option value="ID">Idaho</option>
+    <option value="IL">Illinois</option>
+    <option value="IN">Indiana</option>
+  </select>
 <div class="mb-3">
     <select class="form-select" name="branch" id="example-select" class="choices form-select" name="branch">
         <option>Select Branch</option>
@@ -316,6 +333,11 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 
 </div>
 <!-- END wrapper -->
+<script language="JavaScript" type="text/javascript">
+function checkDelete(){
+    return confirm('Are you sure you want to delete this record?');
+}
+</script>
 <?php include "includes/footer.php" ?>
 
 

@@ -105,7 +105,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         <div class="modal-header">
             <h5 class="modal-title" id="exampleModalgridLabel">New Deposit</h5>
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+        </div> 
         <div class="modal-body">
  
 <form action="pay/pesapal-iframe.php" method="POST">

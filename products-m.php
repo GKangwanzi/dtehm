@@ -49,6 +49,7 @@ echo "<div class='col-sm-6 col-md-4 col-xl-3'>
             <img class='card-img-top rounded-top' src='photos/".$row['photo']."' alt='Card image cap'>
             <div class='card-body'>
                 <h4 class='card-title'>".$row['name']."</h4>
+                <h5 class='card-title'>"."Ugx ".$row['price']."</h5>
                 <p class='card-text text-muted'>".substr_replace($row['description'],"...", 90)."</p>
                 <a href='buy.php?id=".$row['prodID']."' class='btn btn-primary'>View Details</a>
             </div> <!-- end card-body--> 

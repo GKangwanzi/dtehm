@@ -38,7 +38,7 @@
                             </li>
 
                             <li>
-                                <a href="./orders.php" >
+                                <a href="./orders-m.php" >
                                     <i data-feather="shopping-cart"></i>
                                     <span> Orders </span>
                                 </a>
@@ -66,7 +66,7 @@
                             </li>
 
                             <li>
-                                <a href="#" class="tp-link">
+                                <a href="referals.php" class="tp-link">
                                     <i data-feather="users"></i>
                                     <span> My Referrals </span>
                                 </a>
@@ -74,7 +74,7 @@
 
                 
                             <li>
-                                <a href="#" >
+                                <a href="profile.php" >
                                     <i data-feather="user"></i>
                                     <span> Account Settings </span>
                                 </a>
