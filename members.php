@@ -256,27 +256,10 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
     <input type="text" name="phone" id="simpleinput" placeholder="Phone Number" class="form-control">
 </div>
-<select id="select-state" placeholder="Pick a state...">
-    <option value="">Select a state...</option>
-    <option value="AL">Alabama</option>
-    <option value="AK">Alaska</option>
-    <option value="AZ">Arizona</option>
-    <option value="AR">Arkansas</option>
-    <option value="CA">California</option>
-    <option value="CO">Colorado</option>
-    <option value="CT">Connecticut</option>
-    <option value="DE">Delaware</option>
-    <option value="DC">District of Columbia</option>
-    <option value="FL">Florida</option>
-    <option value="GA">Georgia</option>
-    <option value="HI">Hawaii</option>
-    <option value="ID">Idaho</option>
-    <option value="IL">Illinois</option>
-    <option value="IN">Indiana</option>
-  </select>
+
 <div class="mb-3">
-    <select class="form-select" name="branch" id="example-select" class="choices form-select" name="branch">
-        <option>Select Branch</option>
+    <select class="form-select" name="branch" id="example-select" class="choices form-select">
+        <option value="">Select Branch</option>
         <?php 
         include "includes/dbhandle.php";
         $sql = "SELECT * FROM branches";
@@ -296,7 +279,24 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     </select>
 </div>
 <div class="mb-3">
-<input type="text" name="referal" id="simpleinput" placeholder="Enter referal ID" class="form-control">
+<select  name="referal" id="member-search" class="form-select">
+    <option value="">Referal ID</option>
+    <?php 
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM members";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['memberID'].'>' 
+                        . $row['memberID']." - ".$row['fname']." ".$row['lname']. '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+</select>
 </div>
 <div class="mb-3">
     <button name="register" class="btn btn-primary form-control" type="submit">Register</button>
@@ -329,7 +329,12 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <!-- ============================================================== -->
 <!-- End Page content -->
 <!-- ============================================================== -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#member-search').picker({search : true});
+    });
 
+</script>
 
 </div>
 <!-- END wrapper -->

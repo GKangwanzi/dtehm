@@ -106,7 +106,7 @@ $response = file_get_contents($payment_url, false, $context);
 
 if ($response === FALSE) {
     die("Payment request failed.");
-}
+} 
 
 $transaction = json_decode($response, true);
 
