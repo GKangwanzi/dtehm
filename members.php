@@ -48,7 +48,7 @@ if (isset($_POST['register'])){
     $branch     = $_POST["branch"];
     $message    = "This is good news";
     $password   = "DH".mt_rand(10, 1000);
-    $message    = "DTEHM Account details, username $phone  password $password ";
+    $message    = "Your DTEHM Account details, username $mID  password $password ";
 
     $sql2 = "SELECT * FROM referrals WHERE referrer_id='$referalID' ";
     $result = mysqli_query($con, $sql2);
