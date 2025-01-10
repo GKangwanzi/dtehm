@@ -108,7 +108,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
  
 <form action="pay/pesapal-iframe.php" method="POST">
 <div class="mb-3">
-<input required type="text" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
+<input required min="10000" type="number" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 
  
