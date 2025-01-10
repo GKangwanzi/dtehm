@@ -65,7 +65,7 @@ include 'includes/menu-stockist.php';
         </div>
 
         <div class="col-12" style="margin-top: 5px;">
-            <select class="form-select" name="stockist" id="example-select" class="choices form-select" >
+            <select required class="form-select" name="stockist" id="example-select" class="choices form-select" >
             <option value="">Select Stockist</option>
             <?php 
             $sql = "SELECT * FROM users WHERE role = 'stockist' ";
@@ -85,7 +85,7 @@ include 'includes/menu-stockist.php';
       
 
         <div style="margin-top: 5px;" class="col-12">
-                <input class="form-control" name="qty" placeholder="Quantity" type="number" >
+                <input required class="form-control" name="qty" placeholder="Quantity" type="number" >
 
         </div>
         <div class="col-12" style="margin-top: 10px;">

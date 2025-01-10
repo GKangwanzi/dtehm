@@ -65,7 +65,6 @@ echo "<table id='datatable' class='table table-bordered dt-responsive table-resp
 echo "<thead>";
 echo "<tr>";
 echo "<th>Amount</th>";
-echo "<th>Phone Number</th>";
 echo "<th>Ref</th>";
 echo "<th>Status</th>";
 echo "<th>Date</th>";
@@ -74,7 +73,6 @@ echo "</thead>";
 while($row = mysqli_fetch_array($result)){
 echo "<tr>"; 
 echo "<td>" . $row['amount'] . "</td>";
-echo "<td>" . $row['phone'] . "</td>";
 echo "<td>" . $row['transactionRef']. "</td>";
 echo "<td>" . $row['status'] . "</td>";
 echo "<td>" . $row['date'] . "</td>";
@@ -110,7 +108,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
  
 <form action="pay/pesapal-iframe.php" method="POST">
 <div class="mb-3">
-<input type="text" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
+<input required type="text" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 
  
