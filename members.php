@@ -179,7 +179,7 @@ $stmt->execute();
 
                 <div class="card-body">
 
-<?php
+<?php 
 $tableName = "members";
 $tableid = "memberID";
 $sql = "SELECT * FROM $tableName INNER JOIN branches ON members.branch=branches.id";
@@ -306,11 +306,11 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         </div> <!-- end modal body -->
     </div> <!-- end modal content -->
 </div>
-
-
-
-
 </div> <!-- container-fluid -->
+
+
+
+
 </div> <!-- content -->
 
 <!-- Footer Start -->
