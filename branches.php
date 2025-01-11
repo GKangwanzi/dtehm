@@ -78,11 +78,11 @@ try {
 <form action="" method="POST">
 <div class="mb-3">
 <label for="simpleinput" class="form-label">Branch name</label>
-<input name="branch_code" type="text" class="form-control">
+<input name="branch_name" type="text" class="form-control">
 </div>
 <div class="mb-3">
 <label for="simpleinput" class="form-label">Branch Code</label>
-<input name="branch_name" type="text" id="simpleinput" class="form-control">
+<input name="branch_code" type="text" id="simpleinput" class="form-control">
 </div>
 
 <div class="mb-3">
