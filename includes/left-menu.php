@@ -142,13 +142,26 @@
                                 </a>
                             </li>
 
-                
                             <li>
-                                <a href="profile.php" >
-                                    <i data-feather="user"></i>
+                                <a href="#sidebarUsers" data-bs-toggle="collapse">
+                                    <i data-feather="users"></i>
                                     <span> Account Settings </span>
+                                    <span class="menu-arrow"></span>
                                 </a>
+                                <div class="collapse" id="sidebarUsers">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="users.php" class="tp-link">System Users</a>
+                                        </li>
+                                        <li>
+                                            <a href="profile.php" class="tp-link">Members</a>
+                                        </li>
+                                        
+
+                                    </ul>
+                                </div>
                             </li>
+
 
                         </ul>
             

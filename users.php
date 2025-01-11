@@ -31,33 +31,11 @@
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
     <div class="flex-grow-1">
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
-            Add New Stockist
+            Add New Member
         </button>
     </div>
 
 <div class="text-end">
-<?php 
-if (isset($_POST['upgrade'])){
-
-    $mID    = $_POST["memberid"];
-
-
-    $sql    = "UPDATE users SET role='stockist' WHERE memberID='$mID' ";
-
-    if(mysqli_query($con, $sql)){
-    echo "
-        <div class='alert alert-primary alert-dismissible fade show' role='alert'>
-            User upgraded successful!
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
-            </button>
-        </div>";
-
-    } else{
-        echo mysqli_error($con);
-    }
-}
-?>
-
     </div>
 </div>
 
@@ -70,15 +48,15 @@ if (isset($_POST['upgrade'])){
             <div class="card">
 
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Registred Stockists</h5>
+                    <h5 class="card-title mb-0">Registred Members</h5>
                 </div><!-- end card header -->
 
                 <div class="card-body">
 
-<?php
-$tableName = "members";
-$tableid = "memberID";
-$sql = "SELECT * FROM $tableName LEFT JOIN users ON members.memberID=users.memberID LEFT JOIN branches ON members.branch=branches.id WHERE users.role='stockist' ";
+<?php 
+$tableName = "users";
+$tableid = "userID";
+$sql = "SELECT * FROM $tableName";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
@@ -86,8 +64,8 @@ echo "<thead>";
 echo "<tr>";
 echo "<th>ID</th>";
 echo "<th>Name</th>";
-echo "<th>Phone Number</th>";
-echo "<th>Branch</th>";
+echo "<th>Username</th>";
+echo "<th>Password</th>";
 echo "<th>Action</th>";
 echo "</tr>";
 echo "</thead>";
@@ -95,8 +73,8 @@ while($row = mysqli_fetch_array($result)){
 echo "<tr>"; 
 echo "<td>" . $row['memberID'] . "</td>";
 echo "<td>" . $row['fname'].' '.$row['lname'] . "</td>";
-echo "<td>" . $row['phone'] . "</td>";
-echo "<td>" . $row['name'] . "</td>";
+echo "<td>" . $row['username'] . "</td>";
+echo "<td>" . $row['password'] . "</td>";
 echo "<td>                                                       
     <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
         <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
@@ -130,7 +108,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalgridLabel">New Stockist</h5>
+            <h5 class="modal-title" id="exampleModalgridLabel">New Member</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -139,20 +117,74 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
 <input type="text" name="memberid" id="simpleinput" placeholder="Member ID" class="form-control">
 </div>
+<div class="mb-3">
+    <input type="text" name="firstname" id="simpleinput" placeholder="First Name" class="form-control">
+</div>
+<div class="mb-3">
+    <input type="text" name="lastname" id="simpleinput" placeholder="Last Name" class="form-control">
+</div>
+<div class="mb-3">
+    <input type="email" id="example-email" name="email" class="form-control" placeholder="Email Address">
+</div>
 
 <div class="mb-3">
-    <button name="upgrade" class="btn btn-primary form-control" type="submit">Upgrade to Stockist</button>
+    <input type="text" name="phone" id="simpleinput" placeholder="Phone Number" class="form-control">
+</div>
+
+<div class="mb-3">
+    <select class="form-select" name="branch" id="example-select" class="choices form-select">
+        <option value="">Select Branch</option>
+        <?php 
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM branches";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['id'].'>' 
+                        . $row['name']. '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+        
+    </select>
+</div>
+<div class="mb-3">
+<select  name="referal" id="member-search" class="form-select">
+    <option value="">Referal ID</option>
+    <?php 
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM members";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['memberID'].'>' 
+                        . $row['memberID']." - ".$row['fname']." ".$row['lname']. '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+</select>
+</div>
+<div class="mb-3">
+    <button name="register" class="btn btn-primary form-control" type="submit">Register</button>
 </div>
 
 </form>
         </div> <!-- end modal body -->
     </div> <!-- end modal content -->
 </div>
-
-
-
-
 </div> <!-- container-fluid -->
+
+
+
+
 </div> <!-- content -->
 
 <!-- Footer Start -->
@@ -171,7 +203,12 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <!-- ============================================================== -->
 <!-- End Page content -->
 <!-- ============================================================== -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#member-search').picker({search : true});
+    });
 
+</script>
 
 </div>
 <!-- END wrapper -->
