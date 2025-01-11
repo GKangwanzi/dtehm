@@ -116,13 +116,11 @@ try {
                 echo "<thead>";
                  echo "<tr>";
                     echo "<th>Name</th>";
-                    echo "<th>User Role</th>";
                     echo "<th>Action</th>";
                 echo "</tr>";
                 echo "</thead>";
             while($row = mysqli_fetch_array($result)){
                 echo "<tr>"; 
-                    echo "<td>" . $row['id'] . "</td>";
                     echo "<td>" . $row['name'] . "</td>";
                     echo "<td>                                                       
                         <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
