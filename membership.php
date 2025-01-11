@@ -128,12 +128,23 @@ if ($row['membership']=='unpaid') {
     </a>" . "</td>";
 }
  
-echo "<td>                                                       
-    <a href='pay/pesapal-sub-iframe.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=500&action=subscription' class='btn btn-primary'>
-           Initiate Payment
+ if ($row['membership']=='unpaid') {
+    // code...
+    echo "<td>                                                    
+    <a href='paid.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=500&action=subscription' class='btn btn-sm btn-secondary'>
+           Mark Paid
         </a>
+    <a href='pay/pesapal-sub-iframe.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=500&action=subscription' class='btn btn-sm btn-primary'>
+       Pay Now
+    </a>
 </td>";
-echo "</tr>";
+} elseif($row['membership']=='paid'){
+    echo "<td>                                                    
+    
+</td>";
+}
+
+echo "</tr>"; 
 } 
 echo "</table>";
 // Free result set
