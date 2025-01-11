@@ -45,7 +45,7 @@ try {
     $tableName = "branches";
     $data = [
         "name" => $_POST["branch_name"],
-        "description" => $_POST["description"]
+        "code" => $_POST["branch_code"]
     ];
 
     $insertedId = $db->insert($tableName, $data);
@@ -78,12 +78,13 @@ try {
 <form action="" method="POST">
 <div class="mb-3">
 <label for="simpleinput" class="form-label">Branch name</label>
-<input name="branch_name" type="text" id="simpleinput" class="form-control">
+<input name="branch_code" type="text" class="form-control">
 </div>
 <div class="mb-3">
-<label for="example-textarea" class="form-label">Branch location</label>
-<textarea name="description" class="form-control" id="example-textarea" rows="5" spellcheck="false"></textarea>
+<label for="simpleinput" class="form-label">Branch Code</label>
+<input name="branch_name" type="text" id="simpleinput" class="form-control">
 </div>
+
 <div class="mb-3">
 <label for="example-select" class="form-label">.</label>
 <button class="btn btn-primary form-control" type="submit">Add Branch</button>
@@ -115,12 +116,14 @@ try {
             echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
                 echo "<thead>";
                  echo "<tr>";
+                    echo "<th>Code</th>";
                     echo "<th>Name</th>";
                     echo "<th>Action</th>";
                 echo "</tr>";
                 echo "</thead>";
             while($row = mysqli_fetch_array($result)){
                 echo "<tr>"; 
+                    echo "<td>" . $row['code'] . "</td>";
                     echo "<td>" . $row['name'] . "</td>";
                     echo "<td>                                                       
                         <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>
