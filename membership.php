@@ -134,7 +134,7 @@ if ($row['membership']=='unpaid') {
     <a href='paid.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=500&action=subscription' class='btn btn-sm btn-secondary'>
            Mark Paid
         </a>
-    <a href='pay/pesapal-sub-iframe.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=500&action=subscription' class='btn btn-sm btn-primary'>
+    <a href='pay/pesapal-sub-iframe.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=10000&action=subscription' class='btn btn-sm btn-primary'>
        Pay Now
     </a>
 </td>";
