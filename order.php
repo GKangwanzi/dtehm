@@ -77,7 +77,15 @@ $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
 $stmt->bind_param('sss', $member, $message, $commission);
 $stmt->execute();
 
+//Giving Stockist 15000 commission
+$message    = "Purchase of product";
+$commission = 15000;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $stockist, $message, $commission);
+$stmt->execute();
 
+//Giving level1 10% commission
 if (!empty($level1)) {
 $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.10 * $total;
@@ -87,7 +95,7 @@ $stmt->bind_param('sss', $level1, $message, $commission);
 $stmt->execute();
 
 }
-
+//Giving level2 3% commission
 if(!empty($level2)) {
 $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.03 * $total;

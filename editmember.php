@@ -5,7 +5,7 @@
 <?php include "core/sms.php" ?>
 
 <!-- Left Sidebar Start -->
-<?php
+<?php 
     if ($_SESSION['role']=='admin') { 
         include 'includes/left-menu.php';
     }elseif($_SESSION['role']=='member') { 
@@ -16,7 +16,6 @@
 
     }
  ?>
-
 <!-- Left Sidebar End -->
 
 <!-- ============================================================== -->
@@ -31,45 +30,51 @@
 
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
     <div class="flex-grow-1">
-         <!--<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
-           Add New Member 
-        </button>-->
+        
     </div>
 
 <div class="text-end">
-<?php 
-if (isset($_POST['register'])){
-
-    $mID        = $_POST["memberid"];
-    $fname = $_POST["firstname"];
-    $lname       = $_POST["lastname"];
-    $email = $_POST["email"];
-    $phone        = $_POST["phone"];
-    $branch = $_POST["branch"];
-    $message = "This is good news";
-    $password = "DH".mt_rand(10, 1000);
-    $message = "DTEHM Account details, username $phone  password $password ";
 
 
-    $sql = "INSERT INTO members (memberID, fname, lname, email, phone, branch, password)
-    VALUES ('$mID', '$fname', '$lname', '$email', '$phone', '$branch', '$password')";
+<?php
+//Create new beneficiary
+if (isset($_POST['update'])){
+
+    $member     = $_GET['id'];
+    $memberid   = $_POST['memberid'];
+    $fname      = $_POST['fname'];
+    $lname      = $_POST['lname'];
+    $email      = $_POST['email'];
+    $phone      = $_POST['phone'];
+
+     
+    $sql = "UPDATE members SET memberID='$memberid', fname='$fname', lname='$lname', email='$email', phone='$phone' WHERE memberID='$member'";
 
     if(mysqli_query($con, $sql)){
-    SendSMS('non_customised','bulk', $phone, $message);
-    echo "
+        echo "
         <div class='alert alert-primary alert-dismissible fade show' role='alert'>
-            Branch registration successful!
+            Member details updated successfully!
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
             </button>
         </div>";
+        ?>
+        <script type="text/javascript">
+            window.setTimeout(function(){
+        window.location.href = "members.php";
+        }, 2000);
+        </script>
+        <?php
 
-    } else{
-        echo mysqli_error($con);
+        } else{
+            echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
+        }
+         
+        
+
+    }else{
+       echo "<p class='text-subtitle text-muted'>"."My Profile"."</p>";
     }
-    
-  
-}
-?>
+    ?>
     </div>
 </div>
 
@@ -82,83 +87,42 @@ if (isset($_POST['register'])){
             <div class="card">
 
                 <div class="card-header">
-                    <h5 class="card-title mb-0">Memberships</h5>
+                    <h5 class="card-title mb-0">Update Members</h5>
                 </div><!-- end card header -->
 
                 <div class="card-body">
-
 <?php
-$tableName  = "members";
-$tableid    = "memberID";
-$member     = $_SESSION['user'];
-$sql        = "SELECT * FROM $tableName";
-$sql2       = "SELECT * FROM $tableName WHERE memberID='$member' ";
-if($result = mysqli_query($con, $sql2) AND $_SESSION['role']=='member'){
+if (isset($_GET['id'])){
+
+$memberid = $_GET['id'];
+$sql = "SELECT * FROM members WHERE memberID='$memberid' ";
+$result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
-header('Location: dash-m.php');
-
-mysqli_free_result($result);
-
-}elseif($result = mysqli_query($con, $sql) AND $_SESSION['role']=='admin' OR $_SESSION['role']=='stockist'){
-
-    if(mysqli_num_rows($result) > 0){
-echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
-echo "<thead>";
-echo "<tr>";
-echo "<th>ID</th>";
-echo "<th>Name</th>";
-echo "<th>Phone Number</th>";
-echo "<th>Status</th>";
-echo "<th>Action</th>";
-echo "</tr>";
-echo "</thead>";
-while($row = mysqli_fetch_array($result)){
-echo "<tr>"; 
-echo "<td>" . $row['memberID'] . "</td>";
-echo "<td>" . $row['fname'].' '.$row['lname'] . "</td>";
-echo "<td>" . $row['phone'] . "</td>";
-if ($row['membership']=='unpaid') {
-    // code...
-    echo "<td>" ."<a aria-label='anchor' class='btn btn-sm bg-danger-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>"
-        . strtoupper($row['membership'])."
-    </a>" . "</td>";
-} elseif($row['membership']=='paid'){
-    echo "<td>" ."<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit'>"
-        . strtoupper($row['membership'])."
-    </a>" . "</td>";
 }
- 
- if ($row['membership']=='unpaid') {
-    // code...
-    echo "<td>                                                    
-    <a href='paid.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=500&action=subscription' class='btn btn-sm btn-secondary'>
-           Mark Paid
-        </a>
-    <a href='pay/pesapal-sub-iframe.php?id=".$row['memberID']."&fname=".$row['fname']."&lname=".$row['lname']."&amount=10000&action=subscription' class='btn btn-sm btn-primary'>
-       Pay Now
-    </a>
-</td>";
-} elseif($row['membership']=='paid'){
-    echo "<td>                                                    
-    
-</td>";
-}
+    ?>
+<form action="" method="POST">
+<div class="mb-3">
+<input type="text" value="<?php echo $row['memberID']; ?>" name="memberid" id="simpleinput" placeholder="Member ID" class="form-control">
+</div>
+<div class="mb-3">
+    <input type="text" value="<?php echo $row['fname']; ?>" name="fname" id="simpleinput" placeholder="First Name" class="form-control">
+</div>
+<div class="mb-3">
+    <input type="text" value="<?php echo $row['lname']; ?>" name="lname" id="simpleinput" placeholder="Last Name" class="form-control">
+</div>
+<div class="mb-3">
+    <input type="email" value="<?php echo $row['email']; ?>" id="example-email" name="email" class="form-control" placeholder="Email Address">
+</div>
 
-echo "</tr>"; 
-} 
-echo "</table>";
-// Free result set
-mysqli_free_result($result);
-} else{
-echo "No records matching your query were found.";
-}
+<div class="mb-3">
+    <input type="text" value="<?php echo $row['phone']; ?>" name="phone" id="simpleinput" placeholder="Phone Number" class="form-control">
+</div>
 
+<div class="mb-3">
+    <button name="update" class="btn btn-primary form-control" type="submit">Update</button>
+</div>
 
-
-} else{
-echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-}
-?>
+</form>
 
     </div>
 
@@ -196,15 +160,15 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 </div>
 
 <div class="mb-3">
-    <select class="form-select" name="branch" id="example-select" class="choices form-select" name="branch">
-        <option>Select Branch</option>
+    <select class="form-select" name="branch" id="example-select" class="choices form-select">
+        <option value="">Select Branch</option>
         <?php 
         include "includes/dbhandle.php";
         $sql = "SELECT * FROM branches";
         if($result = mysqli_query($con, $sql)){
             if(mysqli_num_rows($result) > 0){
                 while($row = mysqli_fetch_array($result)){
-                        echo '<option value='.$row['is'].'>' 
+                        echo '<option value='.$row['id'].'>' 
                         . $row['name']. '</option>';
                 }
                 mysqli_free_result($result);
@@ -217,7 +181,24 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     </select>
 </div>
 <div class="mb-3">
-<input type="text" id="simpleinput" placeholder="Enter referal ID" class="form-control">
+<select  name="referal" id="member-search" class="form-select">
+    <option value="">Referal ID</option>
+    <?php 
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM members";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['memberID'].'>' 
+                        . $row['memberID']." - ".$row['fname']." ".$row['lname']. '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+</select>
 </div>
 <div class="mb-3">
     <button name="register" class="btn btn-primary form-control" type="submit">Register</button>
@@ -227,11 +208,11 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         </div> <!-- end modal body -->
     </div> <!-- end modal content -->
 </div>
-
-
-
-
 </div> <!-- container-fluid -->
+
+
+
+
 </div> <!-- content -->
 
 <!-- Footer Start -->
@@ -250,10 +231,20 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <!-- ============================================================== -->
 <!-- End Page content -->
 <!-- ============================================================== -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#member-search').picker({search : true});
+    });
 
+</script>
 
 </div>
 <!-- END wrapper -->
+<script language="JavaScript" type="text/javascript">
+function checkDelete(){
+    return confirm('Are you sure you want to delete this record?');
+}
+</script>
 <?php include "includes/footer.php" ?>
 
 

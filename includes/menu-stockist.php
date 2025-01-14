@@ -28,43 +28,25 @@
                             
 
                             <li>
-                                <a href="./dash.php" >
+                                <a href="./dash-s.php" >
                                     <i data-feather="home"></i>
                                     <span> Dashboard </span>
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="./orders.php" >
+                            <li> 
+                                <a href="./orders-s.php" >
                                     <i data-feather="shopping-cart"></i>
                                     <span> Orders </span>
                                 </a>
                             </li>
-                            
+                             
                             <li>
-                                <a href="#sidebarProducts" data-bs-toggle="collapse">
+                                <a href="products-m.php">
                                     <i data-feather="shopping-cart"></i>
                                     <span> Products </span>
-                                    <span class="menu-arrow"></span>
                                 </a>
-
-                                <div class="collapse" id="sidebarProducts">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="./product-categories.php" class="tp-link">Categories</a>
-                                        </li>
-                                        <li>
-                                            <a href="./new-product.php" class="tp-link">Add new product</a>
-                                        </li>
-                                        <li>
-                                            <a href="./products.php" class="tp-link">All Products</a>
-                                        </li>
-
-                                    </ul>
-                                </div>
                             </li>
-
-                            
 
                             <li>
                                 <a href="#sidebarDeposits" data-bs-toggle="collapse">
@@ -101,7 +83,25 @@
                                     </ul>
                                 </div>
                             </li>
+                            <li>
+                                <a href="#sidebarMembers" data-bs-toggle="collapse">
+                                    <i data-feather="users"></i>
+                                    <span> Members </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarMembers">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="members-s.php" class="tp-link">Members</a>
+                                        </li>
+                                        <li>
+                                            <a href="membership-s.php" class="tp-link">Memberships</a>
+                                        </li>
+                                        
 
+                                    </ul>
+                                </div>
+                            </li>
                             <li>
                                 <a href="#" class="tp-link">
                                     <i data-feather="users"></i>

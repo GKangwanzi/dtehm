@@ -72,7 +72,7 @@ include 'includes/menu-stockist.php';
             if($result = mysqli_query($con, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
-                            echo '<option value='.$row['userID'].'>' 
+                            echo '<option value='.$row['memberID'].'>' 
                             . $row['memberID']." ".$row['fname']." ".$row['lname']. '</option>';
                     }
                     mysqli_free_result($result);

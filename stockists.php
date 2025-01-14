@@ -137,7 +137,25 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 
 <form action="" method="POST">
 <div class="mb-3">
-<input type="text" name="memberid" id="simpleinput" placeholder="Member ID" class="form-control">
+<div class="mb-3">
+<select  name="memberid" id="member-search" class="form-select">
+    <option value="">Referal ID</option>
+    <?php  
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM members";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['memberID'].'>' 
+                        . $row['memberID']." - ".$row['fname']." ".$row['lname']. '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+</select>
 </div>
 
 <div class="mb-3">
@@ -175,6 +193,12 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 
 </div>
 <!-- END wrapper -->
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#member-search').picker({search : true});
+    });
+
+</script>
 <script language="JavaScript" type="text/javascript">
 function checkDelete(){
     return confirm('Are you sure you want to delete this record?');
