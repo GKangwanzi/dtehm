@@ -8,7 +8,7 @@
 	require_once('OAuth.php');
 
 	$api = 'https://www.pesapal.com';
-	 
+	  
 	$token = $params 	= NULL;
 	$iframelink 		= $api.'/api/PostPesapalDirectOrderV4';
 	
@@ -29,7 +29,7 @@
 
 	$desc 			= 'DTEHM Deposit';
 	$type 			= 'MERCHANT';	
-	$phonenumber	= $_POST['phone_number'];
+	//$phonenumber	= $_POST['phone_number'];
 	$currency 		= 'UGX';
 	$member = $_POST["memberID"]; 
 	$n = 10;  

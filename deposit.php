@@ -185,10 +185,10 @@ echo '
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div> 
         <div class="modal-body">
- 
-<form action="pay/pesapal-iframe.php" method="POST">
+  
+<form action="pay/iframe.php" method="POST">
 <div class="mb-3">
-<input required min="10000" type="number" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
+<input required type="number" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 
  
