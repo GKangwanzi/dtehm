@@ -105,12 +105,15 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
- 
-<form action="pay/pesapal-iframe.php" method="POST">
+  
+<form action="pay/iframe.php" method="POST">
 <div class="mb-3">
 <input type="text" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 
+<div class="mb-3">
+<input type="text" name="phone_number" id="simpleinput" placeholder="Enter Mobile Money Number" class="form-control">
+</div>
  
 <div class="mb-3">
     <input type="text" name="memberID" id="simpleinput" placeholder="Member ID (It should be exact)" class="form-control">

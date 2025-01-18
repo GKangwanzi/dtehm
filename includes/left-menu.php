@@ -67,7 +67,7 @@
                             
 
                             <li>
-                                <a href="./deposits.php">
+                                <a href="./deposit.php">
                                     <i data-feather="dollar-sign"></i>
                                     <span> Member Deposits </span>
                                 </a>
@@ -83,7 +83,7 @@
                                     <ul class="nav-second-level">
                                         <li>
                                             <a href="withdraws-pending.php" class="tp-link">Pending withdraws</a>
-                                        </li>
+                                        </li> 
                                         <li>
                                             <a href="withdraws-approved.php" class="tp-link">Approved withdraws</a>
                                         </li>

@@ -4,7 +4,7 @@ include "includes/dbhandle.php";
 include "core/walletbalance.php";
 
 if (isset($_POST['order'])){
-
+ 
 
 $memberid   = $_POST['member'];
 $member     = str_replace(' ', '', $memberid);
@@ -75,7 +75,7 @@ $commission = 0.10 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $member, $message, $commission);
-$stmt->execute();
+$stmt->execute(); 
 
 //Giving Stockist 15000 commission
 $message    = "Purchase of product";

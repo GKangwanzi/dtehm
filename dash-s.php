@@ -60,7 +60,6 @@ include "includes/dbhandle.php";
             $totalOrders  = (int)$row['totalOrders'];
 
 
-
         if($result = mysqli_query($con, $sql)){
             if(mysqli_num_rows($result) > 0){
                 $row = mysqli_fetch_array($result);
@@ -240,8 +239,8 @@ if($result = mysqli_query($con, $sql)){
 </tr>
 </thead>
 <?php
-
-$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID WHERE orders.member='$memberid' ";
+ 
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID WHERE orders.stockist='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){

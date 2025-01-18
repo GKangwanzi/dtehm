@@ -207,7 +207,7 @@ echo "<td>
     </a>
 </td>";
 echo "</tr>";
-} 
+}  
 echo "</table>";
 // Free result set
 mysqli_free_result($result);

@@ -48,22 +48,11 @@
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="#sidebarDeposits" data-bs-toggle="collapse">
+                             <li>
+                                <a href="./deposit.php">
                                     <i data-feather="dollar-sign"></i>
-                                    <span> Deposits </span>
-                                    <span class="menu-arrow"></span>
+                                    <span> Member Deposits </span>
                                 </a>
-                                <div class="collapse" id="sidebarDeposits">
-                                    <ul class="nav-second-level">
-                                        <li>
-                                            <a href="#" class="tp-link">Initiations</a>
-                                        </li>
-                                        <li>
-                                            <a href="#" class="tp-link">Successful deposits</a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
 
                             <li>

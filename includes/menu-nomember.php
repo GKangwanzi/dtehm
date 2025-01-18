@@ -33,7 +33,7 @@
                             <li >
                                 <?php 
 
-                                    echo "<a href='./pay/pesapal-sub-iframe.php?id=".$_SESSION['id']."&fname=".$_SESSION['user']."&lname=".$_SESSION['user']."&amount=500&action=subscription?page=dash-m' aria-label='anchor'>";
+                                    echo "<a href='./pay/pesapal-sub-iframe.php?id=".$_SESSION['id']."&fname=".$_SESSION['user']."&lname=".$_SESSION['user']."&amount=76000&action=subscription?page=dash-m' aria-label='anchor'>";
 
                                 ?>
                                      <i data-feather="home"></i>

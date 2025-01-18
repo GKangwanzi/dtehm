@@ -15,12 +15,14 @@ $token = $params = null;
 // Register a merchant account on demo.pesapal.com and use the merchant key for
 // testing. When you are ready to go live make sure you change the key to the
 // live account registered on www.pesapal.com
-$consumer_key = 'YT7oIZgSmu5N//XMlfbwlL9guN354s99';
+//$consumer_key = 'YT7oIZgSmu5N//XMlfbwlL9guN354s99';
+$consumer_key = 'eWaD78uiT/1VLvvty8zzWhnUsajVfh5b';
 
 // Use the secret from your test account on demo.pesapal.com. When you are ready
 // to go live make sure you  change the secret to the live account registered on
 // www.pesapal.com
-$consumer_secret = '9JZx8R+tKw09laqiS5GxFRRHk6A=';
+//$consumer_secret = '9JZx8R+tKw09laqiS5GxFRRHk6A=';
+$consumer_secret = 'iw1NN5ibZsdqViVRv/zRhOLMk4s=';
 
 // Change this to https://www.pesapal.com/API/PostPesapalDirectOrderV4 when you
 // are ready to go live
@@ -32,7 +34,8 @@ function getRandomString($n) {
     return bin2hex(random_bytes($n / 2));
 }         
 // Get form details
-$amount         = (integer) $_POST['amount'];
+$amount1         = (integer) $_POST['amount'];
+$amount = number_format($amount1, 2, '.', '');
 $desc           = "DTEHM Deposit";
 $type           = $_POST['type'];                       // default value = MERCHANT 
 

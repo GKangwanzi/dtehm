@@ -88,10 +88,10 @@ echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper(
 echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
 
 }
- 
+
 echo "</td>";
 echo "<td>                                                      
-<a href='' aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
 <i class='mdi mdi-eye-outline fs-14 text-primary'></i>
 </a>
 </td>";

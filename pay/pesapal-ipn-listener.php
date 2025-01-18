@@ -1,14 +1,44 @@
+    <head>
+
+        <meta charset="utf-8" />
+        <title>DTEHM Health</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="DTEHM Health Ministries"/>
+        <meta name="author" content="Zoyothemes"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- Datatables css -->
+        <link href="../assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/libs/datatables.net-buttons-bs5/css/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/libs/datatables.net-keytable-bs5/css/keyTable.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/libs/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+        <link href="../assets/libs/datatables.net-select-bs5/css/select.bootstrap5.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- App css -->
+        <link href="../assets/css/app.min.css" rel="stylesheet" type="text/css" id="app-style" />
+        <link href="../assets/css/picker.min.css" rel="stylesheet" type="text/css" id="app-style" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+        <!-- Icons -->
+        <link href="../assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+    </head>
+
 <?php
 include_once('OAuth.php');
-include "includes/head.php";
+include 'checkStatus.php';
 // Register a merchant account on demo.pesapal.com and use the merchant key for
-// testing. When you are ready to go live make sure you change the key to the
+// testing. When you are ready to go live make sure you change the key to the 
 // live account registered on www.pesapal.com
 $consumer_key = 'YT7oIZgSmu5N//XMlfbwlL9guN354s99';
 
 // Use the secret from your test account on demo.pesapal.com. When you are ready
 // to go live make sure you  change the secret to the live account registered on
-// www.pesapal.com
+// www.pesapal.com 
 $consumer_secret = '9JZx8R+tKw09laqiS5GxFRRHk6A=';
 
 // Change to https://www.pesapal.com/api/QueryPaymentStatus' when you are ready
@@ -57,7 +87,7 @@ if ($pesapal_notification_type == 'CHANGE' && $pesapal_transaction_tracking_id !
    $raw_header  = substr($response, 0, $header_size - 4);
    $headerArray = explode('\r\n\r\n', $raw_header);
    $header      = $headerArray[count($headerArray) - 1];
-
+ 
    // Transaction status
    $elements = preg_split('/=/',substr($response, $header_size));
    $status = $elements[1]; // PENDING, COMPLETED or FAILED
@@ -88,9 +118,6 @@ if ($pesapal_notification_type == 'CHANGE' && $pesapal_transaction_tracking_id !
 
         $transactionRef = $pesapal_merchant_reference;
 
-        // Bind our params
-        // BK: variables must be bound in the same order as the params in your SQL.
-        // Some people prefer PDO because it supports named parameter.
         $complete = "Complete";
         $stmt->bind_param('sss', $complete, $pesapal_transaction_tracking_id, $pesapal_merchant_reference) or die ($stmt->error);
 
@@ -115,11 +142,44 @@ if ($pesapal_notification_type == 'CHANGE' && $pesapal_transaction_tracking_id !
             ob_start();
             echo $resp;
             ob_flush();
-            echo "
-            <div class='alert alert-primary alert-dismissible fade show' role='alert'> Payment successful!
-            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
-            </button>
-            </div>"; 
+            echo '<div class="maintenance-pages">
+<div class="container-fluid p-0">
+<div class="row">
+
+<div class="col-xl-12 align-self-center">
+<div class="row">
+<!-- col-md-8 -->
+<div class="col-md-5 mx-auto">
+<div class="card p-3 mb-0">
+<div class="card-body">
+<div class="text-center">
+<div class="mb-4 text-center">
+<a href="index.html" class="auth-logo">
+    <img src="assets/images/logo-dark.png" alt="logo-dark" class="mx-auto" height="28"/>
+</a>
+</div>
+
+<div class="coming-soon-img">
+<img src="assets/images/svg/offline.svg" class="img-fluid" alt="coming-soon">
+</div>
+
+<div class="text-center">
+<h3 class="mt-4 fw-semibold text-black text-capitalize">You are offline</h3>
+<p class="text-muted">Internet connection is lost. Try checking the <br> signal and refresh the screen later.</p>
+</div>
+
+<a class="btn btn-primary mt-3 me-1" href="index.html">Back to Home</a>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>';
             header('Refresh: 3; URL=http://localhost/dtehm/deposit.php');
        }
     }

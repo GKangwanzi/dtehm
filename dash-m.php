@@ -109,8 +109,6 @@ if($result = mysqli_query($con, $sql)){
 
 
 $sql = "SELECT SUM(amount) AS cwtotal FROM commission_withdraws WHERE member = '$memberid' AND status='paid' ";
-$result = mysqli_query($con, $sql);
-$row = mysqli_fetch_array($result);
 if($result = mysqli_query($con, $sql)){
             if(mysqli_num_rows($result) > 0){
                 $row = mysqli_fetch_array($result);
