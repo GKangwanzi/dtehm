@@ -13,7 +13,7 @@
                                     <img src="assets/images/logo-stockist.png" alt="" height="40">
                                 </span>
                             </a>
-                            <a href="index.html" class="logo logo-dark">
+                            <a href="" class="logo logo-dark">
                                 <span class="logo-sm">
                                     <img src="assets/images/logo-sm.png" alt="" height="22">
                                 </span>
@@ -35,7 +35,7 @@
                             </li>
 
                             <li> 
-                                <a href="./orders-s.php" >
+                                <a href="./orders.php" >
                                     <i data-feather="shopping-cart"></i>
                                     <span> Orders </span>
                                 </a>

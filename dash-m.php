@@ -259,12 +259,8 @@ echo "<td>
 <p class='mb-0'>".$row['date']."</p>
 </td>";
 echo "<td>";
-if ($row['status']='pending') {
-    echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper($row['status'])."</span>";
-}elseif($row['status']='delivered'){
-    echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
-    
-}
+
+    echo "<span class='badge bg-success-subtle text-success fw-semibold'>".strtoupper($row['status'])."</span>";
 
 echo "</td>";
 echo "<td>                                                      
