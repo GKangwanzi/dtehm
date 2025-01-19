@@ -58,8 +58,80 @@ include "includes/dbhandle.php";
 <th>Action</th>
 </tr>
 </thead>
-<?php
+
+<?php 
+    if ($_SESSION['role']=='admin' OR $_SESSION['role']=='stockist' ) { 
 $memberid = $_SESSION['id'];
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID WHERE stockist='$memberid' ";
+if($result = mysqli_query($con, $sql)){
+if(mysqli_num_rows($result) > 0){
+while($row = mysqli_fetch_array($result)){
+echo "<tr>"; 
+echo "<td>
+<a href='javascript:void(0);' class='text-muted'>".$row['orderid']."</a>
+</td>";
+
+echo "<td>
+<p class='mb-0'>".$row['fname']." ".$row['lname']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['name']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['total']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['date']."</p>
+</td>";
+echo "<td>";
+
+echo "<span class='badge bg-success-subtle text-success fw-semibold'>".strtoupper($row['status'])."</span>";
+
+echo "</td>";
+echo "<td>                                                      
+<a href='";
+echo "order-details.php?order=".$row['orderid']."&member=".$row['memberID'];
+echo "' aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+<i class='mdi mdi-eye-outline fs-14 text-primary'></i>
+</a>
+</td>";
+echo "</tr>";
+}}}
+    }elseif($_SESSION['role']=='member') { 
+        $memberid = $_SESSION['id'];
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID WHERE member='$memberid'";
+if($result = mysqli_query($con, $sql)){
+if(mysqli_num_rows($result) > 0){
+while($row = mysqli_fetch_array($result)){
+echo "<tr>"; 
+echo "<td>
+<a href='javascript:void(0);' class='text-muted'>".$row['orderid']."</a>
+</td>";
+
+echo "<td>
+<p class='mb-0'>".$row['fname']." ".$row['lname']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['name']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['total']."</p>
+</td>";
+echo "<td>
+<p class='mb-0'>".$row['date']."</p>
+</td>";
+echo "<td>";
+echo "<span class='badge bg-success-subtle text-success fw-semibold'>".strtoupper($row['status'])."</span>";
+echo "</td>";
+echo "<td>                                                      
+<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+<i class='mdi mdi-eye-outline fs-14 text-primary'></i>
+</a>
+</td>";
+echo "</tr>";
+}}}
+    }elseif($_SESSION['role']=='stockist') { 
+       $memberid = $_SESSION['id'];
 $sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -82,22 +154,24 @@ echo "<td>
 <p class='mb-0'>".$row['date']."</p>
 </td>";
 echo "<td>";
-if ($row['status']='pending') {
-echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper($row['status'])."</span>";
-}elseif($row['status']='delivered'){
-echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
 
-}
+echo "<span class='badge bg-success-subtle text-success fw-semibold'>".strtoupper($row['status'])."</span>";
 
 echo "</td>";
 echo "<td>                                                      
-<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
+<a href='";
+echo "order-details.php?order=".$row['orderid']."&member=".$row['memberID'];
+echo "' aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
 <i class='mdi mdi-eye-outline fs-14 text-primary'></i>
 </a>
 </td>";
 echo "</tr>";
 }}}
-?>
+    }else{
+
+    }
+ ?>
+
         </table>
     </div>
 

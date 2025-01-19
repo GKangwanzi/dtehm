@@ -8,6 +8,7 @@ $member = $_POST["memberID"];
 
 $status = 'paid';
 $status2 = 'Complete';
+$phone = 'Wallet Balance';
 $description = 'Transfer from commission';
 $n = 10;  
 	function getRandomString($n) {
@@ -17,8 +18,8 @@ $transactionID = "dtehm".getRandomString($n);
 $date = $date = date("l jS \of F Y h:i:s A");
 
 // insert into members
-$stmt = $con->prepare('INSERT INTO commission_withdraws (member, amount, status, description) VALUES (?, ?, ?, ?)');
-$stmt->bind_param('ssss', $member, $amount, $status, $description);
+$stmt = $con->prepare('INSERT INTO commission_withdraws (member, amount, status, phone, description) VALUES (?, ?, ?, ?, ?)');
+$stmt->bind_param('sssss', $member, $amount, $status, $phone, $description);
 $stmt->execute();
 
  

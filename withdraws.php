@@ -89,7 +89,7 @@ echo "<table id='datatable' class='table table-bordered dt-responsive table-resp
 echo "<thead>";
 echo "<tr>";
 echo "<th>Amount</th>";
-echo "<th>Phone Number</th>";
+echo "<th>Recepient</th>";
 echo "<th>Ref</th>";
 echo "<th>Status</th>";
 echo "<th>Date</th>";
@@ -148,7 +148,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 </div>
  
 <div class="mb-3">
-    <input type="text" hidden name="memberID" value="<?php echo $_SESSION['id']; ?>" id="simpleinput" placeholder="Phone Number" class="form-control">
+    <input type="text" hidden name="memberID" value="<?php echo $_SESSION['id']; ?>" id="simpleinput" class="form-control">
 </div>
 
 <div class="mb-3">

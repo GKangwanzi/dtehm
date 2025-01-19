@@ -21,88 +21,100 @@ include "includes/dbhandle.php";
 <!-- Start Page Content here -->
 <!-- ============================================================== -->
             
-            <div class="content-page">
-                <div class="content">
+<div class="content-page">
+<div class="content">
 
-                    <!-- Start Content-->
-                    <div class="container-fluid">
+<!-- Start Content-->
+<div class="container-fluid">
 
-                        <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
-                            <div class="flex-grow-1">
-
-                            </div>
-                        </div>
+    <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+        <div class="flex-grow-1">
 
 
 
 
-<!-- Datatables  -->
+        <div class="d-flex flex-wrap gap-2">
+            <a href="<?php echo 'includes/order-action.php?action=deliver&order='.$_GET['order'];?>" type="button" class="btn btn-primary">Mark Delivered</a>
+            <a href="<?php echo 'includes/order-action.php?action=cancel&order='.$_GET['order']; ?>" type="button" class="btn btn-danger">Cancel Order</a>
+
+        </div>
+
+ 
+        </div>
+    </div>
+
+
+
+
+
 <div class="row">
-<div class="col-12">
-<div class="card">
 
-    <div class="card-header">
-        <h5 class="card-title mb-0">All Orders</h5>
-    </div><!-- end card header -->
 
-    <div class="card-body">
-        <table id="datatable" class="table table-bordered dt-responsive table-responsive nowrap">
-<thead>
-<tr>
-<th>Order ID</th>
-<th>Customer</th>
-<th>Product</th>
-<th>Total</th>  
-<th>Date</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
+<!-- Product details -->
+<div class="col-8">
+
 <?php
-$memberid = $_SESSION['id'];
-$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID WHERE stockist='$memberid' ";
+$member = $_GET['member'];
+$order = $_GET['order'];
+$sql = "SELECT orders.qty as qty, orders.orderid, orders.total, orders.status, products.name, products.price FROM orders INNER JOIN products ON orders.product=products.prodID WHERE orderid='$order' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<tr>"; 
-echo "<td>
-<a href='javascript:void(0);' class='text-muted'>".$row['orderid']."</a>
-</td>";
+echo '<ul class="list-group card">'.
+    '<li class="list-group-item active" aria-current="true">'
+        .'Order #' .$row['orderid'].' Details'.
+    '</li>
+    <li class="list-group-item">'
+        .$row['name'].
+    '</li>
+    <li class="list-group-item">'
+        .$row['price'].'x'.$row['qty'].
+    '</li>
+    <li class="list-group-item">'
+        .$row['total'].
+    '</li>
+    <li class="list-group-item">'
+        .$row['status'].
+    '</li>
 
-echo "<td>
-<p class='mb-0'>".$row['fname']." ".$row['lname']."</p>
-</td>";
-echo "<td>
-<p class='mb-0'>".$row['name']."</p>
-</td>";
-echo "<td>
-<p class='mb-0'>".$row['total']."</p>
-</td>";
-echo "<td>
-<p class='mb-0'>".$row['date']."</p>
-</td>";
-echo "<td>";
-if ($row['status']='pending') {
-echo "<span class='badge bg-danger-subtle text-danger fw-semibold'>".strtoupper($row['status'])."</span>";
-}elseif($row['status']='delivered'){
-echo "<span class='badge bg-primary-subtle text-primary fw-semibold'>".strtoupper($row['status'])."</span>";
-
-}
-
-echo "</td>";
-echo "<td>                                                      
-<a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='View Details'>
-<i class='mdi mdi-eye-outline fs-14 text-primary'></i>
-</a>
-</td>";
-echo "</tr>";
+</ul>';
 }}}
 ?>
-        </table>
-    </div>
 
 </div>
+
+
+<!-- Member details -->
+<div class="col-4">
+
+<?php
+
+$sql = "SELECT * FROM members WHERE memberID='$member' ";
+if($result = mysqli_query($con, $sql)){
+if(mysqli_num_rows($result) > 0){
+while($row = mysqli_fetch_array($result)){
+echo '<ul class="list-group card">'.
+    '<li class="list-group-item active" aria-current="true">'
+        .$row['memberID'].
+    '</li>
+    <li class="list-group-item">'
+        .$row['fname'].
+    '</li>
+    <li class="list-group-item">'
+        .$row['phone'].
+    '</li>
+    <li class="list-group-item">'
+        .$row['email'].
+    '</li>
+
+</ul>';
+
+}}}
+?>
+
 </div>
+
+
 </div>
 
 </div> <!-- container-fluid -->
