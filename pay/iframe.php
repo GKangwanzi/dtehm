@@ -18,18 +18,12 @@
 	 
 	$signature_method	= new OAuthSignatureMethod_HMAC_SHA1();
 	$consumer 			= new OAuthConsumer($consumer_key, $consumer_secret);
-	
-
-
-	
-
-
 
 	$amount 		= str_replace(',','',$_POST['amount']); // remove thousands seperator if included
 
 	$desc 			= 'DTEHM Deposit';
 	$type 			= 'MERCHANT';	
-	//$phonenumber	= $_POST['phone_number'];
+	$phonenumber	= $_POST['phone_number'];
 	$currency 		= 'UGX';
 	$member = $_POST["memberID"]; 
 	$n = 10;  

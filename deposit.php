@@ -191,6 +191,9 @@ echo '
 <input required type="number" name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 
+<div class="mb-3">
+    <input type="text" name="phone_number" id="simpleinput" placeholder="Phone Number" class="form-control">
+</div>
  
 <div class="mb-3">
     <input type="text" hidden name="memberID" value="<?php echo $_SESSION['id']; ?>" id="simpleinput" placeholder="Phone Number" class="form-control">
