@@ -6,7 +6,6 @@ if (!isset($_SESSION['user'])) {
 
 if (isset($_POST['logout'])) {
     // Initialize the session.
-    session_start();
     // Unset all of the session variables.
     unset($_SESSION['user']);
     // Finally, destroy the session.    
