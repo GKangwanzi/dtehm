@@ -14,7 +14,7 @@ if (isset($_POST['logout'])) {
     header("Location: index.php");
 }
 
-?>
+?> 
 
 <!DOCTYPE html>
 <html lang="en">

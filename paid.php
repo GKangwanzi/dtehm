@@ -3,7 +3,7 @@
     include "includes/dbhandle.php";
     $member = $_GET['id'];
     $status = "paid";
-
+ 
      
     $sql = "UPDATE members SET membership='$status' WHERE memberID='$member'";
  

@@ -104,7 +104,7 @@ if (isset($_POST['post'])){
 
 <div class="mb-3">
     <label for="example-select" class="form-label"></label>
-    <button class="btn btn-primary form-control" name="post" type="submit">Add Product</button>
+    <button class="btn btn-primary form-control" name="post" type="submit">Update Profile</button>
 </div>
 </form>
 </div>

@@ -66,20 +66,20 @@ include 'includes/menu-stockist.php';
 
         <div class="col-12" style="margin-top: 5px;">
             <select required class="form-select" name="stockist" id="example-select" class="choices form-select" >
-            <option value="">Select Stockist</option>
+            <option value="">Select Pickup Center</option>
             <?php 
-            $sql = "SELECT * FROM users WHERE role = 'stockist' ";
+            $sql = "SELECT * FROM branches ";
             if($result = mysqli_query($con, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
-                            echo '<option value='.$row['memberID'].'>' 
-                            . $row['memberID']." ".$row['fname']." ".$row['lname']. '</option>';
+                            echo '<option value='.$row['id'].'>' 
+                            . $row['name'].'</option>';
                     }
                     mysqli_free_result($result);
                 } else{
                     echo "No records found.";
                 }}
-            ?>
+            ?> 
             </select>
         </div>
       

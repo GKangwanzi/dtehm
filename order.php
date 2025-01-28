@@ -39,6 +39,11 @@ $price  = (int)$rowp['price'];
 $total  = $price * $qty;
 
 
+//$sql2 = "SELECT * FROM users WHERE referrer_id = '$member' ";
+//$result = mysqli_query($con, $sql2);
+//$row = mysqli_fetch_array($result);
+
+
 $sql = "SELECT SUM(amount) AS wtotal FROM deposits WHERE member = '$member' AND status='Complete' ";
         $sql1    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$member' ";
             $result = mysqli_query($con, $sql1);
@@ -93,7 +98,7 @@ $stmt   = $con->prepare('INSERT INTO orders (product, qty, total, stockist, memb
 $stmt->bind_param('sssss', $product, $qty, $total, $stockist, $member);
 $stmt->execute();
 
-//Giving client 10% commission
+//Giving client 8% commission
 $message    = "Purchase of product";
 $commission = 0.08 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)

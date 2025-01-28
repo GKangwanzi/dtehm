@@ -126,8 +126,8 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 
 </div>
 </div>
-</div> 
-
+</div>  
+ 
 
 <!-- Register Modal -->
 <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="exampleModalgridLabel">
