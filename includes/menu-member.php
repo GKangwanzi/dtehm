@@ -58,13 +58,30 @@
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="withdraws.php" >
-                                    <i data-feather="dollar-sign"></i>
-                                    <span> Withdraws </span>
-                                </a>
-                            </li>
 
+
+                              <li>
+                                <a href="#sidebarMembers" data-bs-toggle="collapse">
+                                    <i data-feather="dollar-sign"></i>
+                                    <span> Withdraws & Accounts </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <div class="collapse" id="sidebarMembers">
+                                    <ul class="nav-second-level">
+                                        <li>
+                                            <a href="withdraws.php" class="tp-link">Withdraws</a>
+                                        </li>
+                                        <li>
+                                            <a href="mobileaccount.php" class="tp-link">Mobile Money Account</a>
+                                        </li>
+                                        <li>
+                                            <a href="bankaccount.php" class="tp-link">Bank Account</a>
+                                        </li>
+                                         
+
+                                    </ul>
+                                </div>
+                            </li>
                             
                             <li>
                                 <a href="referals.php" class="tp-link">

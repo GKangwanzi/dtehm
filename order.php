@@ -224,7 +224,7 @@ $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
 $stmt->bind_param('sss', $level8, $message, $commission);
 $stmt->execute();
  }
-
+ 
 // Commit the transaction
 $con->commit();
 header('Location: ordersuccess.php');
