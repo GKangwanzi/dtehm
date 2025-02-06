@@ -37,7 +37,7 @@ include 'includes/menu-stockist.php';
 <?php 
 if (isset($_POST['register'])){
 
-    
+    $mID        = $_POST["memberid"];
     $referalID  = $_POST["referal"];
     $fname      = $_POST["firstname"];
     $lname      = $_POST["lastname"];
@@ -46,7 +46,7 @@ if (isset($_POST['register'])){
     $branch     = $_POST["branch"];
     $message    = "This is good news";
     $password   = "DH".mt_rand(10, 1000);
-    $mID        = "DTEHM".mt_rand(160, 500);
+
     $message    = "Your DTEHM Account details, username $mID  password $password ";
 
     $sql2 = "SELECT * FROM referrals WHERE referrer_id='$referalID' ";
