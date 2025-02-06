@@ -293,7 +293,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 </div>
 
 <div class="mb-3">
-    <button name="withdraw" class="btn btn-primary form-control" type="submit">Initiate Deposit</button>
+    <button name="withdraw" class="btn btn-primary form-control" type="submit">Initiate Withdraw</button>
 </div>
 
 </form>
