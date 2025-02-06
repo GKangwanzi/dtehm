@@ -160,7 +160,7 @@ try {
     ];
 
     // Collect money
-    if($amount < 50 AND $amount <= $balance){
+    if($amount < 5000 AND $amount <= $balance){
         $response       = sendMoney($token, $body);
         $status         = "paid";
         $description    = "Withdraw to mobile money";
@@ -171,7 +171,7 @@ try {
         $stmt->execute();
             // Print the response
         print_r($response);
-    }elseif($amount > 50 AND $amount <= $balance){
+    }elseif($amount > 5000 AND $amount <= $balance){
         $status         = "unpaid";
         $description    = "Withdraw to mobile money";
         $stmt           = $con->prepare('INSERT INTO commission_withdraws 
