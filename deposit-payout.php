@@ -57,7 +57,7 @@ $data = http_build_query([
     'client_secret' => $client_secret,
     'grant_type' => 'client_credentials'
 ]);
-
+ 
 $options = [
     'http' => [
         'header'  => "Content-Type: application/x-www-form-urlencoded",
@@ -79,7 +79,7 @@ $payer = $_POST['payer'];
 $amount = $_POST['amount'];
 $payer_note = $_POST['payer_note'];
 $payee_note = $_POST['payee_note'];
-$wallet_id = "f72eba17-6b78-4f6a-b477-a54ff2b7f9b3";
+$wallet_id = "632f6a81-0dcc-4033-94ce-25cc2543dc4a";
 
 $payment_data = json_encode([
     "category" => "MobileMoney",

@@ -67,7 +67,7 @@
                             
 
                             <li>
-                                <a href="./deposit.php">
+                                <a href="./deposits.php">
                                     <i data-feather="dollar-sign"></i>
                                     <span> Member Deposits </span>
                                 </a>

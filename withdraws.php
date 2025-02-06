@@ -143,7 +143,7 @@ function sendMoney($token, $body) {
 try {
     $clientId = "pay-d1b52074-078d-454f-8919-5358cc4c951b"; // Replace with your actual client ID
     $clientSecret = "IO-uJSnPjbYN9BaOUJQB2UukDj3wKOSpU2ap"; // Replace with your actual client secret
-    $walletId = "f72eba17-6b78-4f6a-b477-a54ff2b7f9b3"; // Replace with your actual wallet ID
+    $walletId = "632f6a81-0dcc-4033-94ce-25cc2543dc4a"; // Replace with your actual wallet ID
 
     // Get the token
     $token = getToken($clientId, $clientSecret);

@@ -82,7 +82,7 @@ echo "Error: " . $e->getMessage();
 $tableName = "commission_withdraws";
 $tableid = "id";
 $memberid = $_SESSION['id'];
-$sql = "SELECT * FROM $tableName WHERE status='pending' ";
+$sql = "SELECT * FROM $tableName WHERE status='unpaid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
@@ -97,12 +97,12 @@ echo "</tr>";
 echo "</thead>";
 while($row = mysqli_fetch_array($result)){
 echo "<tr>"; 
-echo "<td>" . $row['amount'] . "</td>";
+echo "<td>" . $row['amount'] . "</td>"; 
 echo "<td>" . $row['phone'] . "</td>";
 echo "<td>" . $row['id']. "</td>";
 echo "<td>" . $row['date'] . "</td>";
 echo "<td>                                                      
-<a class='btn btn-primary btn-sm bg-primary'>
+<a href='approve-withdraw.php?id=".$row['id']."' class='btn btn-primary btn-sm bg-primary'>
 <i class='mdi mdi-tick-outline fs-14 text-primary'></i> Approve
 </a>
 </td>";

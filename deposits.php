@@ -115,8 +115,28 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <input type="text" name="phone_number" id="simpleinput" placeholder="Enter Mobile Money Number" class="form-control">
 </div>
  
-<div class="mb-3">
-    <input type="text" name="memberID" id="simpleinput" placeholder="Member ID (It should be exact)" class="form-control">
+<div class="mb-3"> 
+
+    <select  name="memberID" id="member-search" class="form-select">
+    <option value="">Referal ID</option>
+    <?php  
+        include "includes/dbhandle.php";
+        $sql = "SELECT * FROM members";
+        if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                while($row = mysqli_fetch_array($result)){
+                        echo '<option value='.$row['memberID'].'>' 
+                        . $row['memberID']." - ".$row['fname']." ".$row['lname']. '</option>';
+                }
+                mysqli_free_result($result);
+            } else{
+                echo "No records found.";
+            }
+        }
+        ?>
+</select>
+
+
 </div>
 
 <div class="mb-3">
@@ -127,11 +147,10 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
     <button name="deposit" class="btn btn-primary form-control" type="submit">Initiate Deposit</button>
 </div>
 
-</form>
+</form> 
         </div> <!-- end modal body -->
     </div> <!-- end modal content -->
 </div>
-
 
 
 

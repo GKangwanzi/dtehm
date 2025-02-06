@@ -39,7 +39,7 @@ include "includes/head.php";
 
 <div class="text-end">
 <?php
-//Create new beneficiary
+
 if (isset($_POST['post'])){
 
     $member = $_SESSION['id'];

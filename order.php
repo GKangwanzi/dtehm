@@ -98,9 +98,9 @@ $stmt   = $con->prepare('INSERT INTO orders (product, qty, total, stockist, memb
 $stmt->bind_param('sssss', $product, $qty, $total, $stockist, $member);
 $stmt->execute();
 
-//Giving client 8% commission
+//Giving client 10% commission
 $message    = "Purchase of product";
-$commission = 0.08 * $total;
+$commission = 0.1 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $member, $message, $commission);
@@ -117,7 +117,7 @@ $stmt->execute();
 //Giving level1 2.5% commission
 if (!empty($level1)) {
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.025 * $total;
+$commission = 0.03 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level1, $message, $commission);
@@ -127,7 +127,7 @@ $stmt->execute();
 //Giving level2 2% commission
 if(!empty($level2)) {
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.020 * $total;
+$commission = 0.025 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level2, $message, $commission);
@@ -139,7 +139,7 @@ if(!empty($level3)) {
     // code...
     // insert into referrals
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.015 * $total;
+$commission = 0.02 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level3, $message, $commission);
@@ -150,7 +150,7 @@ if(!empty($level4)) {
     // code...
     // insert into referrals
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.010 * $total;
+$commission = 0.015 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level4, $message, $commission);
@@ -161,7 +161,7 @@ if(!empty($level5)) {
     // code...
     // insert into referrals
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.005 * $total;
+$commission = 0.01 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level5, $message, $commission);
@@ -184,7 +184,7 @@ if(!empty($level7)) {
     // code...
     // insert into referrals
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.005 * $total;
+$commission = 0.006 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level7, $message, $commission);
@@ -207,7 +207,7 @@ $stmt->execute();
     // code...
     // insert into referrals
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.005 * $total;
+$commission = 0.004 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level8, $message, $commission);
@@ -218,7 +218,7 @@ $stmt->execute();
     // code...
     // insert into referrals
 $message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.005 * $total;
+$commission = 0.003 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level8, $message, $commission);
