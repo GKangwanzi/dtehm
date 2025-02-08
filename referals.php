@@ -1,7 +1,8 @@
 <?php include "core/insert.php" ?>
+<?php include "core/sms.php" ?>
 <?php include "includes/dbhandle.php" ?>
 <?php include "includes/con.php" ?>
-<?php include "includes/head.php" ?>
+<?php include "includes/head.php" ?> 
 
 <!-- Left Sidebar Start -->
 <?php
@@ -29,6 +30,14 @@ include 'includes/menu-stockist.php';
 
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
 <div class="flex-grow-1">
+    <?php
+    $sqll = "SELECT memberID FROM members ORDER BY memberID DESC LIMIT 1";
+    $resultt = mysqli_query($con, $sqll);
+    $roww = mysqli_fetch_array($resultt);
+    $lastMember = $roww['memberID'];
+    $new = substr($lastMember, -3)+1;
+
+    ?>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
             Add New Member
         </button>
@@ -37,7 +46,15 @@ include 'includes/menu-stockist.php';
 <?php 
 if (isset($_POST['register'])){
 
-    $mID        = $_POST["memberid"];
+
+    $sqll = "SELECT memberID FROM members ORDER BY memberID DESC LIMIT 1";
+    $resultt = mysqli_query($con, $sqll);
+    $roww = mysqli_fetch_array($resultt);
+    $lastMember = $roww['memberID'];
+    $newnumber = substr($lastMember, -3)+1;
+
+
+    $mID        = "DTEHM".$newnumber;
     $referalID  = $_POST["referal"];
     $fname      = $_POST["firstname"];
     $lname      = $_POST["lastname"];
@@ -118,7 +135,7 @@ $stmt = $con->prepare('INSERT INTO users (memberID, fname, lname, username, pass
     VALUES (?, ?, ?, ?, ?, ?)');
 $stmt->bind_param('ssssss', $mID, $fname, $lname, $mID, $password, $role);
 $stmt->execute();
-
+ 
 // Commit the transaction
     $con->commit();
     SendSMS('non_customised','bulk', $phone, $message);
@@ -177,7 +194,7 @@ if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
 
-echo '<div class="col-2"><div class="card bg-primary-subtle">
+echo '<div class="col-6 col-lg-2 col-sm-6 col-md-4"><div class="card bg-primary-subtle">
 <div class="card-body">
 '; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
@@ -204,7 +221,7 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-2'><div class='card bg-success-subtle'><div class='card-body'>"; 
+echo "<div class='col-2 '><div class='card bg-success-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
@@ -429,9 +446,7 @@ echo "</div></div></div>";
         <div class="modal-body">
 
 <form action="" method="POST">
-<div class="mb-3">
-<input type="text" name="memberid" id="simpleinput" placeholder="Member ID" class="form-control">
-</div>
+
 <div class="mb-3">
     <input type="text" name="firstname" id="simpleinput" placeholder="First Name" class="form-control">
 </div>

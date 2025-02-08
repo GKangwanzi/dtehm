@@ -30,9 +30,21 @@
 
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
     <div class="flex-grow-1">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+        <?php
+        $day = date('l');
+
+        if ($day == 'Saturday' OR $day =='Sunday') {
+           echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
             Withdraw Now
-        </button>
+        </button>';
+        }else{
+            echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#alldaysModal">
+            Withdraw Now
+        </button>';
+        }
+
+        ?>
+        
     </div>
 
 <div class="text-end"> 
@@ -160,7 +172,7 @@ try {
     ];
 
     // Collect money 
-    if($amount < 50 AND $amount <= $balance){
+    if($amount < 150000 AND $amount <= $balance){
         $response       = sendMoney($token, $body);
         $status         = "paid";
         $description    = "Withdraw to mobile money";
@@ -171,7 +183,7 @@ try {
         $stmt->execute();
             // Print the response
         print_r($response);
-    }elseif($amount > 50 AND $amount <= $balance){
+    }elseif($amount > 150000 AND $amount <= $balance){
         $status         = "unpaid";
         $description    = "Withdraw to mobile money";
         $stmt           = $con->prepare('INSERT INTO commission_withdraws 
@@ -272,7 +284,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
  
 <form action="" method="POST">
 <div class="mb-3">
-<input type="number" min="100" required name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
+<input type="number" min="5000" required name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 <div class="mb-3">
     <?php 
@@ -300,11 +312,54 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         </div> <!-- end modal body -->
     </div> <!-- end modal content -->
 </div>
-
-
-
-
 </div> <!-- container-fluid -->
+
+
+
+<!-- Register Modal -->
+<div class="modal fade" id="alldaysModal" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalgridLabel">Withdraw Request</h5>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+ 
+<form action="" method="POST">
+<div class="mb-3">
+<input type="number" max="150000" min="2000" required name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
+</div>
+<div class="mb-3">
+    <?php 
+        $id = $_SESSION['id'];
+        $sql = "SELECT * FROM members WHERE memberID='$id' ";
+        $result = mysqli_query($con, $sql);
+        $row = mysqli_fetch_array($result);
+        ?>
+    <input hidden type="text" value="<?php echo $row['mobileMoney']; ?>" name="phone" id="simpleinput" placeholder="Recepient Phone Number" class="form-control">
+</div>
+ 
+<div class="mb-3">
+    <input type="text" hidden name="memberID" value="<?php echo $_SESSION['id']; ?>" id="simpleinput" class="form-control">
+</div>
+
+<div class="mb-3">
+<input type="text" name="type" hidden value="MERCHANT" class="form-control" readonly="readonly" />
+</div>
+
+<div class="mb-3">
+    <button name="withdraw" class="btn btn-primary form-control" type="submit">Initiate Withdraw</button>
+</div>
+
+</form>
+        </div> <!-- end modal body -->
+    </div> <!-- end modal content -->
+</div>
+</div> <!-- container-fluid -->
+
+
+
 </div> <!-- content -->
 
 <!-- Footer Start -->

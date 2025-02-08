@@ -12,12 +12,11 @@
     </div><!-- end card header -->
 <div class="card-body">
 <div class="row">
-<form enctype="multipart/form-data" method="POST">
+<form method="POST">
 <div class="mb-3">
     <label for="example-email" class="form-label">Mobile Money Number</label>
     <input type="text" name="phonenumber" placeholder="Enter phone number to use for your withdraws"   class="form-control">
 </div>
-
 
 <div class="mb-3">
     <label for="example-select" class="form-label"></label>

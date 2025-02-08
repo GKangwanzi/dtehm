@@ -39,7 +39,14 @@
 <?php 
 if (isset($_POST['register'])){
 
-    $mID        = $_POST["memberid"];
+    $sqll = "SELECT memberID FROM members ORDER BY memberID DESC LIMIT 1";
+    $resultt = mysqli_query($con, $sqll);
+    $roww = mysqli_fetch_array($resultt);
+    $lastMember = $roww['memberID'];
+    $newnumber = substr($lastMember, -3)+1;
+
+
+    $mID        = "DTEHM".$newnumber;
     $referalID  = $_POST["referal"];
     $fname      = $_POST["firstname"];
     $lname      = $_POST["lastname"];
@@ -240,9 +247,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
         <div class="modal-body">
 
 <form action="" method="POST">
-<div class="mb-3">
-<input type="text" name="memberid" id="simpleinput" placeholder="Member ID" class="form-control">
-</div>
+
 <div class="mb-3">
     <input type="text" name="firstname" id="simpleinput" placeholder="First Name" class="form-control">
 </div>

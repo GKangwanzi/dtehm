@@ -25,8 +25,6 @@ include "includes/head.php";
 <div class="content-page">
 <div class="content">
 
-
-
 <!-- Start Content-->
 <div class="container-fluid">
 
@@ -42,11 +40,11 @@ include "includes/head.php";
 //Create new beneficiary
 if (isset($_POST['post'])){
 
-    $member = $_SESSION['id'];
-    $phonenumber = $_POST['phonenumber'];
+    $member         = $_SESSION['id'];
+    $phonenumber    = $_POST['phonenumber'];
 
      
-    $sql = "UPDATE members SET mobileMoney=$phonenumber WHERE memberID='$member'";
+    $sql = "UPDATE members SET mobileMoney='$phonenumber' WHERE memberID='$member'";
  
     if(mysqli_query($con, $sql)){
         echo "
@@ -82,7 +80,7 @@ if(strlen($row['mobileMoney']) > 0){
     echo "MobileMoney Account is saved, Contact the nearest DTEHM center to change MobileMoney account details";
     echo '</div></div>';
 }elseif($row['mobileMoney'] < 1){
-    include "mobilemoneyform.php";
+    include "mobilemoneyform.php"; 
 }
 
 ?>
