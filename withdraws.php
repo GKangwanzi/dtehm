@@ -186,20 +186,22 @@ try {
         $response       = sendMoney($token, $body);
         $status         = "paid";
         $description    = "Withdraw to mobile money";
+        $account        = "mobile";
         $stmt           = $con->prepare('INSERT INTO commission_withdraws 
-            (amount, phone, status, description, member)
-        VALUES (?, ?, ?, ?, ?)');
-        $stmt->bind_param('sssss', $amount, $phone, $status, $desc, $member);
+            (amount, phone, status, description, member, account)
+        VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssss', $amount, $phone, $status, $desc, $member, $account);
         $stmt->execute();
             // Print the response
         print_r($response);
     }elseif($amount > 150000 AND $amount <= $balance){
         $status         = "unpaid";
         $description    = "Withdraw to mobile money";
+        $account        = "mobile";
         $stmt           = $con->prepare('INSERT INTO commission_withdraws 
-            (amount, phone, status, description, member)
-        VALUES (?, ?, ?, ?, ?)');
-        $stmt->bind_param('sssss', $amount, $phone, $status, $desc, $member);
+            (amount, phone, status, description, member, account)
+        VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssss', $amount, $phone, $status, $desc, $member, $account);
         $stmt->execute();
         echo "
         <div class='alert alert-primary alert-dismissible fade show' role='alert'>

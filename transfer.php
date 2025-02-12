@@ -16,10 +16,11 @@ $n = 10;
 	}   
 $transactionID = "dtehm".getRandomString($n);
 $date = $date = date("l jS \of F Y h:i:s A");
+$account = 'wallet';
 
 // insert into members
-$stmt = $con->prepare('INSERT INTO commission_withdraws (member, amount, status, phone, description) VALUES (?, ?, ?, ?, ?)');
-$stmt->bind_param('sssss', $member, $amount, $status, $phone, $description);
+$stmt = $con->prepare('INSERT INTO commission_withdraws (member, amount, status, phone, description, account) VALUES (?, ?, ?, ?, ?, ?)');
+$stmt->bind_param('ssssss', $member, $amount, $status, $phone, $description, $account);
 $stmt->execute();
 
  

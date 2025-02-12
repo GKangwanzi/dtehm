@@ -62,7 +62,7 @@ include "includes/dbhandle.php";
 <?php 
     if ($_SESSION['role']=='admin' OR $_SESSION['role']=='stockist' ) { 
 $memberid = $_SESSION['id'];
-$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID WHERE stockist='$memberid' ";
+$sql = "SELECT * FROM orders INNER JOIN products ON orders.product=products.prodID INNER JOIN members ON orders.member=members.memberID ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
