@@ -78,10 +78,20 @@ if($result = mysqli_query($con, $sql)){
         }
 
 
-$balance = $totalcommission - $totalwcommission;
-$amount     = $_POST["amount"];
+$balance    = $totalcommission - $totalwcommission;
+$pay        = $_POST["amount"];
+//$amount     = $_POST["amount"];
 $member     = $_POST["memberID"];
 $phone      = $_POST["phone"];
+if ($pay <= 60000) {
+    $amount = $pay + 600;
+}elseif($pay > 60000 AND $pay < 500000) {
+    $amount = $pay + 1200;
+}elseif ($pay > 500000 AND $pay <= 1000000) {
+    $amount = $pay +2000;
+}elseif($pay > 1000000 AND $pay <= 5000000) {
+    $amount = $pay + 2400;
+}
 
 function getToken($clientId, $clientSecret) {
     $curl = curl_init();
@@ -167,7 +177,7 @@ try {
         "walletId" => $walletId,
         "externalId" => "any-thing-here",
         "payee" => $phone,
-        "amount" => $amount,
+        "amount" => $pay,
         "payeeNote" => "DTEHM Commission Withdraw"
     ];
 
@@ -303,7 +313,31 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
 <input type="text" name="type" hidden value="MERCHANT" class="form-control" readonly="readonly" />
 </div>
-
+<div class="mb-3">
+<table>
+    <tr>
+        <th>RANGE</th>
+        <th>FEES</th>
+    </tr>
+    <tr>
+        <td>500 - 60,000</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>60,001 - 500,000</td>
+        <td>1,200</td>
+    </tr>
+    <tr>
+        <td>500,001 - 1,000,000</td>
+        <td>2,000</td>
+    </tr>
+    <tr>
+        <td>1,000,001 - 5,000,000</td>
+        <td>2,400</td>
+    </tr>
+    
+</table>
+</div>
 <div class="mb-3">
     <button name="withdraw" class="btn btn-primary form-control" type="submit">Initiate Withdraw</button>
 </div>
