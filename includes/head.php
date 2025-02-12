@@ -27,7 +27,8 @@ if (isset($_POST['logout'])) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         <!-- App favicon -->
-        <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <link rel="shortcut icon" href="assets/images/favicon.png">
+        <link rel="manifest" href="./manifest.json">
 
         <!-- Datatables css -->
         <link href="assets/libs/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />

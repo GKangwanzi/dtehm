@@ -199,16 +199,20 @@ if($result = mysqli_query($con, $sql)){
 <div class="bg-primary-subtle rounded-2 p-1 me-2 border border-dashed border-primary">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 14 14"><path fill="#287F71" fill-rule="evenodd" d="M13.463 9.692C13.463 12.664 10.77 14 7 14S.537 12.664.537 9.713c0-3.231 1.616-4.868 4.847-6.505L4.24 1.077A.7.7 0 0 1 4.843 0H9.41a.7.7 0 0 1 .603 1.023L8.616 3.208c3.23 1.615 4.847 3.252 4.847 6.484M7.625 4.887a.625.625 0 1 0-1.25 0v.627a1.74 1.74 0 0 0-.298 3.44l1.473.322a.625.625 0 0 1-.133 1.236h-.834a.625.625 0 0 1-.59-.416a.625.625 0 1 0-1.178.416a1.877 1.877 0 0 0 1.56 1.239v.636a.625.625 0 1 0 1.25 0v-.636a1.876 1.876 0 0 0 .192-3.696l-1.473-.322a.49.49 0 0 1 .105-.97h.968a.622.622 0 0 1 .59.416a.625.625 0 0 0 1.178-.417a1.874 1.874 0 0 0-1.56-1.238z" clip-rule="evenodd"/></svg>
 </div>
-<p class="mb-0 text-dark fs-15">Payout Balance</p>
+<p class="mb-0 text-dark fs-15">Available Payout</p>
 </div>
 <h3 class="mb-0 fs-24 text-black me-2"> 
 <?php 
+$sqlo = "SELECT SUM(amount) AS mobilewithdraws FROM commission_withdraws WHERE account='mobile' ";
+$resulto = mysqli_query($con, $sqlo);
+$row = mysqli_fetch_array($resulto);
+$twithdraws = $row['mobilewithdraws'];
 
 $sql = "SELECT SUM(amount) AS cbtotal FROM commission_balance WHERE status='Success' ";
 if($result = mysqli_query($con, $sql)){
     if(mysqli_num_rows($result) > 0){
         $row = mysqli_fetch_array($result);
-        echo "Ugx ".number_format($row['cbtotal'], 0, '.', ',');
+        echo "Ugx ".number_format($row['cbtotal']-$twithdraws, 0, '.', ',');
         mysqli_free_result($result);
     } else{
         echo "Ugx 0";
@@ -260,7 +264,7 @@ if($result = mysqli_query($con, $sql)){
 
 
 
-</div>
+</div> 
 </div>
 </div>
 

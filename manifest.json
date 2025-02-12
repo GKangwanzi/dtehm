@@ -1,0 +1,28 @@
+
+{
+"screenshots": [
+  {
+    "src": "desktop.webp",
+    "sizes": "1280x720",
+    "type": "image/webp"
+  }
+],
+  "short_name": "DTEHM",
+  "name": "DTEHM",
+  "icons": [
+    { 
+      "src": "assets/images/favicon.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "assets/images/favicon2.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "https://app.dtehmhealth.com",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "theme_color": "#3367D6"
+}

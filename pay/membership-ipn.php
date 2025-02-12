@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -105,6 +106,14 @@ if ($pesapal_notification_type == 'CHANGE' && $pesapal_transaction_tracking_id !
         $complete = "Complete";
         $stmt->bind_param('ss', $complete, $pesapal_merchant_reference) or die ($stmt->error);
         $db_update_successful = $stmt->execute() or die ($stmt->error);
+
+
+        $stmt = $con->prepare("UPDATE commissions SET amount=? WHERE newmember=?") or die ($this->mysqli->error);
+        $transactionRef = $pesapal_merchant_reference;
+        $member = $_SESSION['id'];
+        $pay = '10000';
+        $stmt->bind_param('ss', $pay, $member) or die ($stmt->error);
+        $stmt->execute() or die ($stmt->error);
 
 
 

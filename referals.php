@@ -120,11 +120,11 @@ $stmt->execute();
 
 // insert into commissions
 $date = date('yyyy-mm-dd');
-$commission = "10000";
+$commission = "0";
 $commissionName = "Commision from new member";
-$stmt = $con->prepare('INSERT INTO commissions (member, name, amount)
-    VALUES (?, ?, ?)');
-$stmt->bind_param('sss', $referalID, $commissionName, $commission);
+$stmt = $con->prepare('INSERT INTO commissions (member, name, amount, newmember)
+    VALUES (?, ?, ?, ?)');
+$stmt->bind_param('ssss', $referalID, $commissionName, $commission, $mID);
 $stmt->execute();
 
 // insert into users
