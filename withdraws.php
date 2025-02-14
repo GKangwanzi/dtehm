@@ -52,9 +52,63 @@
     </div>
 </div>
 <?php 
+if (isset($_POST['withdraw'])) {
+$pay        = $_POST["amount"];
+
+$memberid   = $_SESSION['id'];
+
+$sqlo = "SELECT SUM(amount) AS mobilewithdraws FROM commission_withdraws WHERE account='mobile' ";
+$resulto = mysqli_query($con, $sqlo);
+$row = mysqli_fetch_array($resulto);
+$twithdraws = $row['mobilewithdraws'];
+
+$sql = "SELECT SUM(amount) AS cbtotal FROM commission_balance WHERE status='Success' ";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_array($result);
+$availablepayout = $row['cbtotal']-$twithdraws; 
+
+
+$sql = "SELECT SUM(amount) AS ctotal FROM commissions WHERE member = '$memberid' ";
+if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                $totalcommission = $row['ctotal'];
+            } else{
+                $totalcommission = 0;
+            }
+        } 
+
+$sql = "SELECT SUM(amount) AS cwtotal FROM commission_withdraws WHERE member = '$memberid' AND status='paid' ";
+if($result = mysqli_query($con, $sql)){
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_array($result);
+                $totalwcommission = $row['cwtotal'];
+            } else{
+                $totalwcommission = 0;
+            }
+        }
+
+$commbalance = $totalcommission - $totalwcommission;
+
+if ($pay > $commbalance) {
+    echo "
+        <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        The amount you are withdrawing is more than the current commission balance. Please choose amount less than ".$commbalance."
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+        </button>
+        </div>";
+}elseif($pay > $availablepayout){
+        echo "
+        <div class='alert alert-danger alert-dismissible fade show' role='alert'>
+        This withdraw can not be handled now, Please try again later.
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+        </button>
+        </div>";
+} elseif($pay >= $commbalance){
+     
 
 if (isset($_POST['withdraw'])) {
-
+ 
 $memberid = $_SESSION['id'];
 $sql = "SELECT SUM(amount) AS ctotal FROM commissions WHERE member = '$memberid' ";
 if($result = mysqli_query($con, $sql)){
@@ -83,6 +137,7 @@ $pay        = $_POST["amount"];
 //$amount     = $_POST["amount"];
 $member     = $_POST["memberID"];
 $phone      = $_POST["phone"];
+$option     = $_POST['option'];
 if ($pay <= 60000) {
     $amount = $pay + 600;
 }elseif($pay > 60000 AND $pay < 500000) {
@@ -182,7 +237,7 @@ try {
     ];
 
     // Collect money 
-    if($amount < 150000 AND $amount <= $balance){
+    if($amount < 150000 AND $amount <= $balance AND $option=='mobile' ){
         $response       = sendMoney($token, $body);
         $status         = "paid";
         $description    = "Withdraw to mobile money";
@@ -194,10 +249,40 @@ try {
         $stmt->execute();
             // Print the response
         print_r($response);
-    }elseif($amount > 150000 AND $amount <= $balance){
+    }elseif($amount > 150000 AND $amount <= $balance AND $option=='mobile'){
         $status         = "unpaid";
         $description    = "Withdraw to mobile money";
         $account        = "mobile";
+        $stmt           = $con->prepare('INSERT INTO commission_withdraws 
+            (amount, phone, status, description, member, account)
+        VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssss', $amount, $phone, $status, $desc, $member, $account);
+        $stmt->execute();
+        echo "
+        <div class='alert alert-primary alert-dismissible fade show' role='alert'>
+        Withdraw request submitted, It will be processed within 48Hours. Thank you
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+        </button>
+        </div>";
+    }elseif($amount > 150000 AND $amount <= $balance AND $option=='bank'){
+        $status         = "unpaid";
+        $description    = "Withdraw to bank account";
+        $account        = "bank";
+        $stmt           = $con->prepare('INSERT INTO commission_withdraws 
+            (amount, phone, status, description, member, account)
+        VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssss', $amount, $phone, $status, $desc, $member, $account);
+        $stmt->execute();
+        echo "
+        <div class='alert alert-primary alert-dismissible fade show' role='alert'>
+        Withdraw request submitted, It will be processed within 48Hours. Thank you
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
+        </button>
+        </div>";
+    }elseif($amount < 150000 AND $amount <= $balance AND $option=='bank'){
+        $status         = "unpaid";
+        $description    = "Withdraw to bank account";
+        $account        = "bank";
         $stmt           = $con->prepare('INSERT INTO commission_withdraws 
             (amount, phone, status, description, member, account)
         VALUES (?, ?, ?, ?, ?, ?)');
@@ -217,14 +302,20 @@ try {
         </button>
         </div>";
     }
-    
-
 
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage();
 }
 
 }
+
+
+}
+
+}
+
+
+
 ?>
 
     <!-- Datatables  -->
@@ -299,6 +390,13 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <input type="number" min="5000" required name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
 </div>
 <div class="mb-3">
+    <label for="example-select" class="form-label">Withdraw Option</label>
+    <select class="form-select" name="option" id="example-select" class="choices form-select" name="branch">
+        <option value="mobile">Mobile Money </option>
+        <option value="bank">Bank/Cheque</option>
+    </select>
+</div>
+<div class="mb-3">
     <?php 
         $id = $_SESSION['id'];
         $sql = "SELECT * FROM members WHERE memberID='$id' ";
@@ -343,7 +441,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
     <button name="withdraw" class="btn btn-primary form-control" type="submit">Initiate Withdraw</button>
 </div>
-
+ 
 </form>
         </div> <!-- end modal body -->
     </div> <!-- end modal content -->
@@ -365,6 +463,39 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <form action="" method="POST">
 <div class="mb-3">
 <input type="number" max="150000" min="2000" required name="amount" id="simpleinput" placeholder="Enter Amount (Ugx)" class="form-control">
+</div>
+<div class="mb-3">
+    <label for="example-select" class="form-label">Withdraw Option</label>
+    <select class="form-select" name="option" id="example-select" class="choices form-select" name="branch">
+        <option value="mobile">Mobile Money </option>
+        <option value="bank">Bank/Cheque</option>
+    </select>
+</div>
+<div class="mb-3">
+<table class="table">
+    <h4>Withdraw Fees</h4>
+    <tr>
+        <th>RANGE</th>
+        <th>FEES</th>
+    </tr>
+    <tr>
+        <td>500 - 60,000</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>60,001 - 500,000</td>
+        <td>1,200</td>
+    </tr>
+    <tr>
+        <td>500,001 - 1,000,000</td>
+        <td>2,000</td>
+    </tr>
+    <tr>
+        <td>1,000,001 - 5,000,000</td>
+        <td>2,400</td>
+    </tr>
+    
+</table>
 </div>
 <div class="mb-3">
     <?php 

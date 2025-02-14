@@ -30,7 +30,9 @@
 
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
     <div class="flex-grow-1">
-
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
+            Initiate Withdraw
+        </button>
     </div>
 
 <div class="text-end"> 
@@ -71,7 +73,7 @@ echo "Error: " . $e->getMessage();
             <div class="card">
 
                 <div class="card-header">
-                    <h5 class="card-title mb-0">All Paid Withdraws</h5>
+                    <h5 class="card-title mb-0">All Pending Withdraws</h5>
                 </div><!-- end card header -->
 
                 <div class="card-body">
@@ -80,7 +82,7 @@ echo "Error: " . $e->getMessage();
 $tableName = "commission_withdraws";
 $tableid = "id";
 $memberid = $_SESSION['id'];
-$sql = "SELECT * FROM $tableName WHERE status='paid' AND account='mobile' ";
+$sql = "SELECT * FROM $tableName WHERE status='unpaid' AND account='bank' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
@@ -90,15 +92,20 @@ echo "<th>Amount</th>";
 echo "<th>Phone Number</th>";
 echo "<th>Ref</th>";
 echo "<th>Date</th>";
+echo "<th>Action</th>";
 echo "</tr>";
 echo "</thead>";
 while($row = mysqli_fetch_array($result)){
 echo "<tr>"; 
-echo "<td>" . $row['amount'] . "</td>";
+echo "<td>" . $row['amount'] . "</td>"; 
 echo "<td>" . $row['phone'] . "</td>";
 echo "<td>" . $row['id']. "</td>";
 echo "<td>" . $row['date'] . "</td>";
-
+echo "<td>                                                      
+<a href='approve-withdraw.php?id=".$row['id']."' class='btn btn-primary btn-sm bg-primary'>
+<i class='mdi mdi-tick-outline fs-14 text-primary'></i> Approve
+</a>
+</td>";
 echo "</tr>";
 } 
 echo "</table>";

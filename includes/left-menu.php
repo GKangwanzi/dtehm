@@ -82,10 +82,16 @@
                                 <div class="collapse" id="sidebarExpages">
                                     <ul class="nav-second-level">
                                         <li>
-                                            <a href="withdraws-pending.php" class="tp-link">Pending withdraws</a>
+                                            <a href="withdraws-pending.php" class="tp-link">Pending Mobile Withdraws</a>
+                                        </li>  
+                                        <li>
+                                            <a href="withdraws-approved.php" class="tp-link">Approved Mobile Withdraws</a>
+                                        </li>
+                                        <li>
+                                            <a href="pending-bank.php" class="tp-link">Pending Bank Withdraws</a>
                                         </li> 
                                         <li>
-                                            <a href="withdraws-approved.php" class="tp-link">Approved withdraws</a>
+                                            <a href="approved-bank.php" class="tp-link">Approved Bank Withdraws</a>
                                         </li>
                                     </ul>
                                 </div>

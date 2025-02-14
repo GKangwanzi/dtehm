@@ -82,7 +82,7 @@ echo "Error: " . $e->getMessage();
 $tableName = "commission_withdraws";
 $tableid = "id";
 $memberid = $_SESSION['id'];
-$sql = "SELECT * FROM $tableName WHERE status='unpaid' ";
+$sql = "SELECT * FROM $tableName WHERE status='unpaid' AND account='mobile' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 echo "<table id='datatable' class='table table-bordered dt-responsive table-responsive nowrap'>";
