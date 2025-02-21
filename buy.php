@@ -68,12 +68,12 @@ include 'includes/menu-stockist.php';
             <select required class="form-select" name="stockist" id="example-select" class="choices form-select" >
             <option value="">Select Pickup Center</option>
             <?php 
-            $sql = "SELECT * FROM branches ";
+            $sql = "SELECT * FROM users WHERE role='stockist' ";
             if($result = mysqli_query($con, $sql)){
                 if(mysqli_num_rows($result) > 0){
                     while($row = mysqli_fetch_array($result)){
-                            echo '<option value='.$row['id'].'>' 
-                            . $row['name'].'</option>';
+                            echo '<option value='.$row['memberID'].'>' 
+                            . $row['fname'].' '.$row['lname'].'</option>';
                     }
                     mysqli_free_result($result);
                 } else{

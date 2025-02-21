@@ -202,7 +202,7 @@ if($result = mysqli_query($con, $sql)){
 <p class="mb-0 text-dark fs-15">Available Payout</p>
 </div>
 <h3 class="mb-0 fs-24 text-black me-2"> 
-<?php 
+<?php  
 $sqlo = "SELECT SUM(amount) AS mobilewithdraws FROM commission_withdraws WHERE account='mobile' ";
 $resulto = mysqli_query($con, $sqlo);
 $row = mysqli_fetch_array($resulto);

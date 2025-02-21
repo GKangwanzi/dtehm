@@ -54,7 +54,7 @@ include "includes/dbhandle.php";
     <?php 
         $memberid = $_SESSION['id'];
         $sql = "SELECT SUM(amount) AS wtotal FROM deposits WHERE member = '$memberid'AND status='Complete' ";
-        $sql1    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$memberid' ";
+        $sql1    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$memberid' AND NOT status='cancelled' ";
             $result = mysqli_query($con, $sql1);
             $row    = mysqli_fetch_array($result);
             $totalOrders  = (int)$row['totalOrders'];
@@ -70,7 +70,7 @@ include "includes/dbhandle.php";
             } else{
                 echo "Ugx 0";
             }
-        }
+        } 
         ?></h3>
 </div>
 

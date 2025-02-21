@@ -13,7 +13,7 @@ $stockist   = $_POST['stockist'];
 $quantity   = (int)$_POST['qty'];
 $qty        = str_replace(' ', '', $quantity);
 
-
+ 
 
 $sql = "SELECT * FROM referrals WHERE referrer_id = '$member' ";
 $result = mysqli_query($con, $sql);
@@ -45,7 +45,7 @@ $total  = $price * $qty;
 
 
 $sql = "SELECT SUM(amount) AS wtotal FROM deposits WHERE member = '$member' AND status='Complete' ";
-        $sql1    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$member' ";
+        $sql1    = "SELECT SUM(total) as totalOrders FROM orders WHERE member = '$member' AND NOT status='cancelled' ";
             $result = mysqli_query($con, $sql1);
             $row    = mysqli_fetch_array($result);
             $totalOrders  = (int)$row['totalOrders'];
@@ -88,7 +88,7 @@ if ($currencyBalance < $total){
     $stmt->bind_param('si', $newQty, $product);
     $stmt->execute();
 
-
+ 
 
     try{
 
@@ -115,114 +115,258 @@ $stmt->bind_param('sss', $stockist, $message, $commission);
 $stmt->execute();
 
 //Giving level1 2.5% commission
-if (!empty($level1)) {
-$message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.03 * $total;
-$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+if (!empty($level1)) { 
+
+$sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_array($result);
+$purchases = $row['purchases'];
+if ($purchases >= 2) {
+    $message    = "Purchase by ".$_SESSION['id'];
+    $commission = 0.03 * $total;
+    $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
-$stmt->bind_param('sss', $level1, $message, $commission);
-$stmt->execute();
+    $stmt->bind_param('sss', $level1, $message, $commission);
+    $stmt->execute();
+}elseif($purchases < 2){
+    $message    = "Purchase by ".$_SESSION['id'];
+    $commission = 0;
+    $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+    $stmt->bind_param('sss', $level1, $message, $commission);
+    $stmt->execute();
+}
+
+
 }
 
 //Giving level2 2% commission
 if(!empty($level2)) {
-$message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.025 * $total;
-$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+        $message    = "Purchase by ".$_SESSION['id'];
+        $commission = 0.025 * $total;
+        $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
-$stmt->bind_param('sss', $level2, $message, $commission);
-$stmt->execute();
+        $stmt->bind_param('sss', $level2, $message, $commission);
+        $stmt->execute();
+    }elseif($purchases < 2){
+        $message    = "Purchase by ".$_SESSION['id'];
+        $commission = 0;
+        $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+        $stmt->bind_param('sss', $level2, $message, $commission);
+        $stmt->execute();
+    }
+
 }
 
 //Giving level3 1.5% commission
 if(!empty($level3)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
-$commission = 0.02 * $total;
-$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+        $message    = "Purchase by ".$_SESSION['id'];
+        $commission = 0.02 * $total;
+        $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
-$stmt->bind_param('sss', $level3, $message, $commission);
-$stmt->execute();
+        $stmt->bind_param('sss', $level3, $message, $commission);
+        $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+        $commission = 0;
+        $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+        $stmt->bind_param('sss', $level3, $message, $commission);
+        $stmt->execute();
+    } 
+
 }
 
 if(!empty($level4)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.015 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level4, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level4, $message, $commission);
+$stmt->execute();
+    } 
+
 } 
 
 if(!empty($level5)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+        $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.01 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level5, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level5, $message, $commission);
+$stmt->execute();
+    } 
+
 }
 
 if(!empty($level6)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+        $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.005 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level6, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level6, $message, $commission);
+$stmt->execute();
+    } 
+
 
 }
 
 if(!empty($level7)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+        $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.006 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level7, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level7, $message, $commission);
+$stmt->execute();
+    } 
+
 
 }
 
 if(!empty($level8)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.005 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level8, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level8, $message, $commission);
+$stmt->execute();
+    } 
+
  }
 
  if(!empty($level9)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+    if ($purchases >= 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.004 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level8, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+        $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level8, $message, $commission);
+$stmt->execute();
+    } 
+
  }
 
  if(!empty($level10)) {
     // code...
     // insert into referrals
-$message    = "Purchase by ".$_SESSION['id'];
+    $sql = "SELECT COUNT(total) as purchases  FROM orders WHERE member='$level1' AND date >= now() - interval 60 day";
+    $result = mysqli_query($con, $sql);
+    $row = mysqli_fetch_array($result);
+    $purchases = $row['purchases'];
+
+    if ($purchases >= 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
 $commission = 0.003 * $total;
 $stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
     VALUES (?, ?, ?)');
 $stmt->bind_param('sss', $level8, $message, $commission);
 $stmt->execute();
+    } elseif ($purchases < 2) {
+       $message    = "Purchase by ".$_SESSION['id'];
+$commission = 0;
+$stmt       = $con->prepare('INSERT INTO commissions (member, name, amount)
+    VALUES (?, ?, ?)');
+$stmt->bind_param('sss', $level8, $message, $commission);
+$stmt->execute();
+    } 
+    
+
  }
  
 // Commit the transaction
