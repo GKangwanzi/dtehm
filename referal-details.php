@@ -38,9 +38,7 @@ include 'includes/menu-stockist.php';
     $new = substr($lastMember, -3)+1;
 
     ?>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal">
-            Add New Member
-        </button>
+
     </div>
 </div>
 <?php 
@@ -180,7 +178,7 @@ $stmt->execute();
 ?>
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level1='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
@@ -188,13 +186,13 @@ echo "<h4>Generation One - <b>".$row['total']." Members"."</b></h4>";
 ?>
 
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level1='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
 
-echo '<a href="referal-details.php?member='.$row['referrer_id'].'" class="col-6 col-lg-2 col-sm-6 col-md-4"><div class="card bg-primary-subtle">
+echo '<div class="col-6 col-lg-2 col-sm-6 col-md-4"><div class="card bg-primary-subtle">
 <div class="card-body">
 '; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
@@ -202,21 +200,21 @@ echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'><b>".$row['referrer_id']. 
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']."</p>";
 echo "</div>
 </div>
-</a>";
+</div>";
 }}}
 ?>  
 </div>
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level2='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Two - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level2='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -234,14 +232,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level3='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Three - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level3='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -259,14 +257,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level4='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Four - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level4='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -284,14 +282,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level5='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Five - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level5='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -309,14 +307,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level6='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Six - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level6='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -334,14 +332,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level7='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Seven - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level7='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -359,14 +357,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level8='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Eight - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level8='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -384,14 +382,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level9='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Nine - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level9='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
@@ -409,14 +407,14 @@ echo "</div></div></div>";
 
 <div class="row">
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT COUNT(referrer_id) as total FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level10='$memberid' ";
 $result = mysqli_query($con, $sql);
 $row = mysqli_fetch_array($result);
 echo "<h4>Generation Ten - <b>".$row['total']." Members"."</b></h4>";
 ?>
 <?php
-$memberid = $_SESSION['id'];
+$memberid = $_GET['member'];
 $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=members.memberID WHERE referrals.level10='$memberid' ";
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
