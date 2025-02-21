@@ -221,13 +221,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-success-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-success-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</p>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -246,13 +246,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-secondary-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-secondary-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</p>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -271,13 +271,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-warning-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-warning-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</p>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -296,13 +296,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-primary-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-primary-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</p>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -321,13 +321,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-success-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-success-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</h4>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -346,13 +346,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-secondary-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-secondary-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</h4>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -371,13 +371,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card '><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card '><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</h4>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -396,13 +396,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-danger-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-danger-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</h4>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
@@ -421,13 +421,13 @@ $sql = "SELECT * FROM referrals INNER JOIN members ON referrals.referrer_id=memb
 if($result = mysqli_query($con, $sql)){
 if(mysqli_num_rows($result) > 0){
 while($row = mysqli_fetch_array($result)){
-echo "<div class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-primary-subtle'><div class='card-body'>"; 
+echo "<a href='referal-details.php?member=".$row['referrer_id']."' class='col-6 col-lg-2 col-sm-6 col-md-4'><div class='card bg-primary-subtle'><div class='card-body'>"; 
 echo "<img src='assets/images/users/user-12.jpg' alt='avatar' class='img-fluid avatar-md img-thumbnail me-2 rounded-circle avatar-border'>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>";
 echo $row['referrer_id'];
 echo "</p>";
 echo "<p style='font-size: 0.8em;' class='fs-10 mb-0'>".$row['fname']." ".$row['lname']."</h4>";
-echo "</div></div></div>";
+echo "</div></div></a>";
 }}}
 ?>  
 </div>
