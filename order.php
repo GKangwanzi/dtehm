@@ -29,14 +29,16 @@ $level8 = $row['level8'] ?? null;
 $level9 = $row['level9'] ?? null;
 $level10 = $row['level10'] ?? null;
 
-$sql    = "SELECT * FROM products WHERE prodID = '$product' ";
-$result = mysqli_query($con, $sql);
-$rowp    = mysqli_fetch_array($result);
-$price  = (int)$rowp['price'];
+$sql    =   "SELECT * FROM products WHERE prodID = '$product' ";
+$result =   mysqli_query($con, $sql);
+$rowp   =   mysqli_fetch_array($result);
+$price  =   (int)$rowp['price'];
+$points =   (int)$rowp['points'];
 //echo "Price is ".$price."<br/>";
 //echo "Qty is ".$qty;
 //var_dump($price);
 $total  = $price * $qty;
+$totalpoints = $points * $qty;
 
 
 //$sql2 = "SELECT * FROM users WHERE referrer_id = '$member' ";
@@ -96,6 +98,13 @@ if ($currencyBalance < $total){
 $stmt   = $con->prepare('INSERT INTO orders (product, qty, total, stockist, member)
     VALUES (?, ?, ?, ?, ?)');
 $stmt->bind_param('sssss', $product, $qty, $total, $stockist, $member);
+$stmt->execute();
+
+//Give points
+$datepoints  =  date("d/m/y h:i:s A");
+$stmt   = $con->prepare('INSERT INTO points (points, member, referal, level2, level3, level4, level5, level6, level7, level8, level9, level10, date)
+    VALUES (?, ?, ?, ?,?,?,?,?,?,?,?,?,?)');
+$stmt->bind_param('sssssssssssss', $totalpoints, $member, $level1, $level2, $level3, $level4, $level5, $level6, $level7, $level8, $level9, $level10, $datepoints);
 $stmt->execute();
 
 //Giving client 10% commission

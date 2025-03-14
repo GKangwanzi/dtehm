@@ -39,102 +39,83 @@ include "includes/head.php";
 
 <div class="text-end">
 <?php
-//Create new beneficiary
-if (isset($_POST['post'])){
+//Update Product
+if (isset($_POST['update'])){
 
-    
-    $name           = $_POST['proname'];
-    $price          = $_POST['price'];
-    $description    = $_POST['description'];
-    $category       = $_POST['category'];
-    $qty            = $_POST['qty'];
-    $points         = $_POST['points'];
+    $product    = $_GET['id'];
+    $name       = $_POST['proname'];
+    $price      = $_POST['price'];
+    $qty        = $_POST['qty'];
+    $points     = $_POST['points'];
 
-    $filename       = $_FILES["uploadfile"]["name"];
-    $tempname       = $_FILES["uploadfile"]["tmp_name"];
-    $folder         = "photos/" . $filename;
- 
-    $sql = "INSERT INTO products (name, price, description, category, qty, photo, points)
-    VALUES ('$name', '$price', '$description', '$category', '$qty', '$filename', '$points')";
+     
+    $sql        = "UPDATE products SET name='$name', price='$price', qty='$qty', points='$points' WHERE prodID='$product'";
 
-    if(mysqli_query($con, $sql) and move_uploaded_file($tempname, $folder)){
+    if(mysqli_query($con, $sql)){
         echo "
         <div class='alert alert-primary alert-dismissible fade show' role='alert'>
-            Product added successful!
+            Product details updated successfully!
             <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>  
             </button>
         </div>";
+        ?>
+        <script type="text/javascript">
+            window.setTimeout(function(){
+        window.location.href = "products.php";
+        }, 2000);
+        </script>
+        <?php
 
         } else{
             echo "ERROR: Could not able to execute $sql. " . mysqli_error($con);
         }
          
-        // Close connection
-        mysqli_close($con);
+        
 
     }else{
-       echo "<p class='text-subtitle text-muted'>"."Use this form to add a new product"."</p>";
+       echo "<p class='text-subtitle text-muted'>"."My Profile"."</p>";
     }
     ?>
     </div>
 </div>
 
-<!-- General Form -->
+<!-- General Form --> 
 <div class="row">
 <div class="col-12">
 <div class="card">
 <div class="card-body">
 <div class="row">
 <form enctype="multipart/form-data" method="POST">
+<?php
+if (isset($_GET['id'])){
+
+$product = $_GET['id'];
+$sql = "SELECT * FROM products WHERE prodID='$product' ";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_array($result);
+}
+?>
 <div class="mb-3">
     <label for="simpleinput" class="form-label">Product Name</label>
-    <input type="text" name="proname" id="simpleinput" class="form-control">
+    <input type="text" name="proname" value="<?php echo $row['name']; ?>" class="form-control">
 </div>
 <div class="mb-3">
     <label for="simpleinput" class="form-label">Price</label>
-    <input type="text" name="price" id="simpleinput" class="form-control">
+    <input type="text" name="price" value="<?php echo $row['price']; ?>" class="form-control">
 </div>
 <div class="mb-3">
     <label for="example-email" class="form-label">Quantity</label>
-    <input type="number" name="qty" id="example-email" name="example-email" class="form-control">
+    <input type="number" name="qty" value="<?php echo $row['qty']; ?>" name="example-email" class="form-control">
 </div>
 <div class="mb-3">
     <label class="form-label">Points</label>
-    <input type="number" name="points"  class="form-control">
-</div>
-<div class="mb-3">
-    <label for="example-select" class="form-label">Product Category</label>
-    <select class="form-select" name="category" id="example-select" class="choices form-select" name="branch">
-        <option>Select Category</option>
-        <?php 
-        include "includes/dbhandle.php";
-        $sql = "SELECT * FROM pro_categories";
-        if($result = mysqli_query($con, $sql)){
-            if(mysqli_num_rows($result) > 0){
-                while($row = mysqli_fetch_array($result)){
-                        echo '<option value='.$row['proID'].'>' 
-                        . $row['name']. '</option>';
-                }
-                mysqli_free_result($result);
-            } else{
-                echo "No records found.";
-            }
-        }
-        ?>
-    </select>
-</div>
-<div class="mb-3">
-    <label for="formFile"  class="form-label">Product photo</label>
-    <input class="form-control" type="file" name="uploadfile" id="formFile">
+    <input type="number" name="points" value="<?php echo $row['points']; ?>"  class="form-control">
 </div>
 
-<div class="mb-3">
-    <label for="example-textarea" class="form-label">Product description</label>
-    <textarea class="form-control" name="description" id="example-textarea" rows="13" spellcheck="false"></textarea>
-</div>
+
 <div class="mb-3">
     <label for="example-select" class="form-label"></label>
-    <button class="btn btn-primary form-control" name="post" type="submit">Add Product</button>
+    <button class="btn btn-primary form-control" name="update" type="submit">Add Product</button>
 </div>
 </form>
 </div>

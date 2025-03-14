@@ -51,6 +51,7 @@ include 'includes/menu-stockist.php';
 <th>Product Name</th>
 <th>Price</th>
 <th>Quantity</th>
+<th>Points</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -66,8 +67,9 @@ echo "<tr>";
 echo "<td>" . $row['name'] . "</td>";
 echo "<td>" . $row['price']. "</td>";
 echo "<td>" . $row['qty'] . "</td>";
+echo "<td>" . $row['points'] . "</td>";
  echo "<td>                                                       
-    <a aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit Category'>
+    <a href='editprod.php?id=".$row['prodID']."' aria-label='anchor' class='btn btn-sm bg-primary-subtle me-1' data-bs-toggle='tooltip' data-bs-original-title='Edit Category'>
         <i class='mdi mdi-pencil-outline fs-14 text-primary'></i>
     </a>
     <a onclick='return checkDelete()' href='core/delete.php?id=".$row['prodID']."&t=".$tableName."&tID=".$tableid."' aria-label='anchor' class='btn btn-sm bg-danger-subtle' data-bs-toggle='tooltip' data-bs-original-title='Delete'>

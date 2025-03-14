@@ -53,7 +53,7 @@ include 'includes/menu-stockist.php';
         <input class="form-control" hidden name="member" placeholder="Quantity" type="text" value="
         <?php 
         echo $_SESSION['id'];
-        ?> 
+        ?>  
         ">
         </div>
         <div style="margin-top: 5px;" class="col-12">

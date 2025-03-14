@@ -37,7 +37,7 @@
 
 
 <?php
-//Create new beneficiary
+//Update members
 if (isset($_POST['update'])){
 
     $member     = $_GET['id'];
@@ -70,7 +70,7 @@ if (isset($_POST['update'])){
         }
          
         
-
+ 
     }else{
        echo "<p class='text-subtitle text-muted'>"."My Profile"."</p>";
     }
