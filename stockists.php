@@ -139,7 +139,7 @@ echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
 <div class="mb-3">
 <div class="mb-3">
 <select  name="memberid" id="member-search" class="form-select">
-    <option value="">Referal ID</option>
+
     <?php  
         include "includes/dbhandle.php";
         $sql = "SELECT * FROM members";
